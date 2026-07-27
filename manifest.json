@@ -1,11 +1,11 @@
 {
-    "display_name": "角色卡管理 (Char Manager)",
+    "display_name": "角色卡管理 · Mobile (Char Manager Mobile)",
     "loading_order": 100,
     "requires": [],
     "optional": [],
     "js": "index.js",
     "css": "style.css",
     "author": "ysnbysnb",
-    "version": "3.0.0",
-    "homePage": "https://github.com/idx425/st-char-manager"
+    "version": "3.1.0",
+    "homePage": "https://github.com/idx425/st-char-manager-mobile"
 }

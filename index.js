@@ -1,16 +1,16 @@
 /**
  * ST Char Manager · 角色卡管理
  * 角色卡浏览 / 搜索 / 收藏 / 分类筛选 / 一键切换 / 详情预览 / 导出备份
- * https://github.com/idx425/st-char-manager
+ * https://github.com/idx425/st-char-manager-mobile
  * License: MIT
  */
 (() => {
     'use strict';
 
-    const MODULE = 'st_char_manager';
-    const EXT_NAME = 'st-char-manager';
-    const VERSION = '3.0.0';
-    const REPO_PATH = 'idx425/st-char-manager';
+    const MODULE = 'st_char_manager_mobile';
+    const EXT_NAME = 'st-char-manager-mobile';
+    const VERSION = '3.1.0';
+    const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -1379,7 +1379,7 @@
             const box = $(`
                 <div class="ccm-modal-box ccm-manager-box">
                   <div class="ccm-modal-head">
-                    <span><i class="fa-solid fa-address-book"></i> CHAR·MANAGER <span class="ccm-sys-ver">v${VERSION}</span><i class="ccm-blink">▊</i></span>
+                    <span><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M <span class="ccm-sys-ver">v${VERSION}</span><i class="ccm-blink">▊</i></span>
                     <span class="ccm-head-tools">
                       <span id="ccm_count" class="ccm-count"></span>
                       <i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
@@ -1403,7 +1403,7 @@
             const embed = $(`
                 <div id="ccm_embed" class="ccm-embed-box">
                   <div class="ccm-embed-head">
-                    <span class="ccm-embed-title"><i class="fa-solid fa-address-book"></i> CHAR·MANAGER</span>
+                    <span class="ccm-embed-title"><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M</span>
                     <span class="ccm-head-tools">
                       <span id="ccm_count" class="ccm-count"></span>
                       <i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
@@ -1519,12 +1519,12 @@
         <div class="ccm-settings">
           <div class="inline-drawer">
             <div class="inline-drawer-toggle inline-drawer-header">
-              <b><i class="fa-solid fa-address-book ccm-grad-icon"></i>&nbsp;角色卡管理</b>
+              <b><i class="fa-solid fa-address-book ccm-grad-icon"></i>&nbsp;角色卡管理 · Mobile</b>
               <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
             </div>
             <div class="inline-drawer-content">
               <div class="ccm-sys-bar">
-                <span class="ccm-sys-id">CHAR·MANAGER</span>
+                <span class="ccm-sys-id">CHAR·MANAGER·M</span>
                 <span class="ccm-sys-ver">v${VERSION}</span>
                 <i class="ccm-blink">▊</i>
                 <span class="ccm-sys-spacer"></span>
@@ -1593,6 +1593,6 @@
         }
         setInterval(quietRemotePoll, 60 * 1000);
 
-        console.log('[角色卡管理] v' + VERSION + ' 已加载');
+        console.log('[角色卡管理·Mobile] v' + VERSION + ' 已加载');
     });
 })();
