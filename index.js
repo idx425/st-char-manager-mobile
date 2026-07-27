@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '3.1.2';
+    const VERSION = '3.1.3';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -39,12 +39,78 @@
             ctx.extensionSettings[MODULE] = {};
         }
         const settings = ctx.extensionSettings[MODULE];
+
+        /* ---- mobile layout enforcer v3.1.3 ---- */
+        // 部分酒馆主题 CSS 会覆盖扩展 style.css 的 grid 规则；用 style 标签 + 运行时再钉一次
+        (function enforceMobileLayout() {
+            const css = `
+html body .ccm-quickbar,html body #ccm_quickbar,html body #ccm_embed #ccm_quickbar{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+  overflow-x:hidden!important;overflow-y:visible!important}
+html body .ccm-qbtn,html body #ccm_quickbar .ccm-qbtn{
+  width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
+  display:inline-flex!important;justify-content:center!important;align-items:center!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  padding:9px 6px!important;font-size:0.76em!important;flex:unset!important}
+html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body #rm_characters_block #ccm_grid{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow-x:hidden!important}
+@media (min-width:1200px){
+  html body .ccm-grid,html body #ccm_grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  html body .ccm-quickbar,html body #ccm_quickbar{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}`;
+            let el = document.getElementById('ccm_mobile_layout_fix');
+            if (!el) {
+                el = document.createElement('style');
+                el.id = 'ccm_mobile_layout_fix';
+                document.head.appendChild(el);
+            }
+            el.textContent = css;
+            const pin = () => {
+                const wide = window.innerWidth >= 1200;
+                const cols = wide ? 'repeat(3, minmax(0, 1fr))' : 'repeat(2, minmax(0, 1fr))';
+                document.querySelectorAll('#ccm_quickbar, .ccm-quickbar').forEach((n) => {
+                    n.style.setProperty('display', 'grid', 'important');
+                    n.style.setProperty('grid-template-columns', cols, 'important');
+                    n.style.setProperty('width', '100%', 'important');
+                    n.style.setProperty('max-width', '100%', 'important');
+                    n.style.setProperty('overflow-x', 'hidden', 'important');
+                    n.style.setProperty('gap', '8px', 'important');
+                });
+                document.querySelectorAll('#ccm_grid, .ccm-grid').forEach((n) => {
+                    n.style.setProperty('display', 'grid', 'important');
+                    n.style.setProperty('grid-template-columns', cols, 'important');
+                    n.style.setProperty('width', '100%', 'important');
+                    n.style.setProperty('max-width', '100%', 'important');
+                    n.style.setProperty('box-sizing', 'border-box', 'important');
+                });
+                document.querySelectorAll('#ccm_quickbar .ccm-qbtn, .ccm-quickbar .ccm-qbtn').forEach((n) => {
+                    n.style.setProperty('width', '100%', 'important');
+                    n.style.setProperty('min-width', '0', 'important');
+                    n.style.setProperty('max-width', '100%', 'important');
+                    n.style.setProperty('flex', 'unset', 'important');
+                    n.style.setProperty('box-sizing', 'border-box', 'important');
+                });
+            };
+            window.__ccmPinLayout = pin;
+            pin();
+            // 渲染后再次钉死（接管嵌入会重建 DOM）
+            const mo = new MutationObserver(() => {
+                clearTimeout(mo._t);
+                mo._t = setTimeout(pin, 50);
+            });
+            mo.observe(document.body, { childList: true, subtree: true });
+            window.addEventListener('resize', pin);
+        })();
+
         if (!Array.isArray(settings.favs)) settings.favs = [];
         if (!Array.isArray(settings.recent)) settings.recent = [];
         if (!['recent', 'name', 'added'].includes(settings.sort)) settings.sort = 'recent';
         if (!Array.isArray(settings.folders)) settings.folders = [];
         if (!settings.cardFolder || typeof settings.cardFolder !== 'object') settings.cardFolder = {};
-        // 每页数量必须是 3 的倍数：网格固定一排三张，除不尽会在页尾留空位
+        // 每页数量取 12/24/48：手机默认 2 列也能整页排满
         // （老版本存的 10/20/50 自动迁移到最接近的档位）
         const PAGE_SIZES = [12, 24, 48];
         if (!PAGE_SIZES.includes(settings.pageSize)) {
@@ -1359,6 +1425,7 @@
             renderQuickbar();
             renderFilters();
             renderGrid();
+            if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout();
         }
 
         /* ---------------- 内置导入（自带文件选择器，支持 PNG / JSON / WEBP / CHARX / YAML） ---------------- */
@@ -1478,6 +1545,7 @@
                 for (const ch of list) { exportCard(ch, true); await sleep(350); }
                 toastr.success('已全部触发下载', '角色卡管理');
             });
+            if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout();
         }
 
         function openManager() {

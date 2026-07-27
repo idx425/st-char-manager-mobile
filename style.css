@@ -1,5 +1,5 @@
 /* ============================================================
-   角色卡管理 · Mobile 强制深色玻璃 v3.1.2
+   角色卡管理 · Mobile 强制深色玻璃 v3.1.3
    设计语言：Dark Glassmorphism · 浅色主题强制可读 · 手机弹层居中
    与 API 快切 (st-api-switcher) 同一套视觉与定位体系
    ============================================================ */
@@ -511,7 +511,7 @@
     border-radius: 5px;
 }
 
-@media (min-width: 560px) {
+@media (min-width: 99999px) {
     .ccm-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
@@ -519,7 +519,7 @@
     }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 99999px) {
     .ccm-grid {
         gap: 15px;
         padding: 15px 18px 18px;
@@ -1007,12 +1007,16 @@
 /* ---- 快捷操作栏 ---- */
 
 .ccm-quickbar {
-    display: flex;
-    gap: 7px;
-    padding: 9px 14px 0;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 9px 10px 0;
+    overflow: visible;
     scrollbar-width: none;
     overscroll-behavior: contain;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .ccm-quickbar::-webkit-scrollbar {
@@ -1022,19 +1026,31 @@
 .ccm-qbtn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 5px;
     border: 1px solid var(--ccm-line-hi);
     border-radius: 10px;
     background: var(--ccm-glass);
     color: inherit;
-    font-size: 0.8em;
-    padding: 6px 11px;
+    font-size: 0.78em;
+    padding: 8px 6px;
     cursor: pointer;
     white-space: nowrap;
-    flex-shrink: 0;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: transform 0.14s var(--ccm-ease), border-color 0.2s, box-shadow 0.2s;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+}
+
+.ccm-qbtn > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ccm-qbtn i {
@@ -1680,7 +1696,7 @@
 }
 
 
-/* ==== MOBILE FORCE DARK / CENTER v3.1.2 ==== */
+/* ==== MOBILE FORCE DARK / CENTER v3.1.3 ==== */
 
 .ccm-settings .text_pole,
 .ccm-overlay .text_pole,
@@ -1807,7 +1823,7 @@
 }
 
 
-/* ==== FINAL MOBILE v3.1.2 HARD OVERRIDES ==== */
+/* ==== FINAL MOBILE v3.1.3 HARD OVERRIDES ==== */
 
 /* 手机端：遮罩与弹层始终居中，禁止顶到上方 / 被 safe-area 裁切 */
 .ccm-overlay {
@@ -1981,7 +1997,7 @@
     }
 }
 
-/* ==== FINAL MOBILE v3.1.2 LAYOUT + TEXT ==== */
+/* ==== FINAL MOBILE v3.1.3 LAYOUT + TEXT ==== */
 
 /* 遮罩居中 + safe-area */
 .ccm-overlay {
@@ -2065,7 +2081,7 @@ body .ccm-modal-box,
     box-sizing: border-box !important;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 99999px) {
     .ccm-grid,
     #ccm_grid,
     #ccm_grid.ccm-grid,
@@ -2198,7 +2214,7 @@ body .ccm-blink {
     }
 }
 
-/* ==== ULTRA FINAL v3.1.2 PHONE READABILITY ==== */
+/* ==== ULTRA FINAL v3.1.3 PHONE READABILITY ==== */
 
 /* 原生角色面板嵌入：吃满可用宽，去掉把网格挤窄的左右内边距 */
 #rm_characters_block.ccm-native-takeover,
@@ -2275,4 +2291,370 @@ body .ccm-blink {
     background: rgb(255 255 255 / 8%) !important;
     color: #e8f0ff !important;
     -webkit-text-fill-color: #e8f0ff !important;
+}
+
+
+/* ==== v3.1.3 PHONE LAYOUT LOCK ==== */
+/* 手机版默认永远 2 列；只有平板宽屏才 3 列。快捷栏 3 列网格，绝不横向挤爆 */
+
+html body .ccm-grid,
+html body #ccm_grid,
+html body #ccm_grid.ccm-grid,
+html body #ccm_embed #ccm_grid,
+html body #ccm_embed .ccm-grid,
+html body #rm_characters_block .ccm-grid,
+html body #rm_characters_block #ccm_grid,
+html body .ccm-manager-box #ccm_grid,
+html body .ccm-manager-box .ccm-grid,
+html body .ccm-embed-box #ccm_grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 8px 6px 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+html body .ccm-quickbar,
+html body #ccm_quickbar,
+html body #ccm_embed #ccm_quickbar,
+html body #ccm_embed .ccm-quickbar,
+html body .ccm-manager-box .ccm-quickbar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 8px 8px 0 !important;
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    flex-wrap: unset !important;
+}
+
+html body .ccm-qbtn,
+html body #ccm_quickbar .ccm-qbtn,
+html body #ccm_embed .ccm-qbtn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: unset !important;
+    flex-shrink: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 8px 4px !important;
+    font-size: 0.74em !important;
+    box-sizing: border-box !important;
+}
+
+html body .ccm-qbtn > span {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+html body .ccm-modes,
+html body #ccm_modes {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    max-width: 100% !important;
+}
+
+html body .ccm-fchip-sort {
+    margin-left: 0 !important;
+}
+
+html body .ccm-folderbar,
+html body .ccm-tagbar {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 嵌入宿主宽度 */
+html body #rm_characters_block.ccm-native-takeover,
+html body #rm_characters_block.ccm-native-takeover #ccm_embed,
+html body #ccm_embed.ccm-embed-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 卡片按钮别挡内容 */
+html body .ccm-tile-star,
+html body .ccm-tile-info,
+html body .ccm-tile-del {
+    z-index: 3 !important;
+}
+
+html body .ccm-tile-name {
+    font-size: 0.76em !important;
+    line-height: 1.3 !important;
+    padding: 6px 8px 8px !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    overflow: hidden !important;
+}
+
+/* 仅超宽平板才 3 列 */
+@media (min-width: 99999px) {
+    html body .ccm-grid,
+    html body #ccm_grid,
+    html body #ccm_grid.ccm-grid,
+    html body #ccm_embed #ccm_grid,
+    html body #ccm_embed .ccm-grid,
+    html body #rm_characters_block .ccm-grid,
+    html body #rm_characters_block #ccm_grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        padding: 12px 12px 16px !important;
+    }
+    html body .ccm-quickbar,
+    html body #ccm_quickbar {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+}
+
+/* 极窄屏：快捷栏 2 列，字更小 */
+@media (max-width: 360px) {
+    html body .ccm-quickbar,
+    html body #ccm_quickbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    html body .ccm-qbtn {
+        font-size: 0.72em !important;
+        padding: 7px 3px !important;
+    }
+}
+
+
+/* ============================================================
+   v3.1.3 MOBILE HARD LAYOUT (last wins)
+   截图问题：快捷栏 6 按钮挤一行重叠；网格被抬回 3 列
+   策略：最高优先级强制 2 列网格 + 快捷栏 2×3 换行
+   ============================================================ */
+
+html body .ccm-quickbar,
+html body #ccm_quickbar,
+html body #ccm_embed #ccm_quickbar,
+html body #ccm_embed .ccm-quickbar,
+html body .ccm-manager-box #ccm_quickbar,
+html body .ccm-manager-box .ccm-quickbar,
+html body .ccm-embed-box .ccm-quickbar,
+html body #rm_characters_block #ccm_quickbar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    gap: 8px !important;
+    padding: 8px 8px 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    flex-wrap: unset !important;
+    flex-direction: unset !important;
+    white-space: normal !important;
+}
+
+html body .ccm-qbtn,
+html body #ccm_quickbar .ccm-qbtn,
+html body #ccm_embed .ccm-qbtn,
+html body .ccm-manager-box .ccm-qbtn,
+html body #rm_characters_block .ccm-qbtn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    flex: unset !important;
+    flex-shrink: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 9px 6px !important;
+    font-size: 0.76em !important;
+    line-height: 1.2 !important;
+    position: static !important;
+    float: none !important;
+}
+
+html body .ccm-qbtn > span,
+html body #ccm_quickbar .ccm-qbtn > span {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+html body .ccm-qbtn > i {
+    flex-shrink: 0 !important;
+}
+
+html body .ccm-modes,
+html body #ccm_modes,
+html body #ccm_embed .ccm-modes {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    padding: 8px 8px 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+html body .ccm-fchip-sort {
+    margin-left: 0 !important;
+}
+
+/* 手机包默认永远 2 列卡片 */
+html body .ccm-grid,
+html body #ccm_grid,
+html body #ccm_grid.ccm-grid,
+html body #ccm_embed #ccm_grid,
+html body #ccm_embed .ccm-grid,
+html body #rm_characters_block .ccm-grid,
+html body #rm_characters_block #ccm_grid,
+html body .ccm-manager-box #ccm_grid,
+html body .ccm-manager-box .ccm-grid,
+html body .ccm-embed-box #ccm_grid,
+html body .ccm-embed-box .ccm-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 8px 6px 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 嵌入宿主吃满宽度 */
+html body #rm_characters_block.ccm-native-takeover,
+html body #rm_characters_block.ccm-native-takeover > #ccm_embed,
+html body #ccm_embed.ccm-embed-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+html body .ccm-tile {
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+html body .ccm-tile-name {
+    font-size: 0.8em !important;
+    line-height: 1.3 !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+}
+
+/* 仅超宽屏（外接显示器级）才 3 列 */
+@media (min-width: 1200px) {
+    html body .ccm-grid,
+    html body #ccm_grid,
+    html body #ccm_grid.ccm-grid,
+    html body #ccm_embed #ccm_grid,
+    html body #ccm_embed .ccm-grid,
+    html body #rm_characters_block .ccm-grid,
+    html body #rm_characters_block #ccm_grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        padding: 12px 12px 16px !important;
+    }
+    html body .ccm-quickbar,
+    html body #ccm_quickbar {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 360px) {
+    html body .ccm-qbtn,
+    html body #ccm_quickbar .ccm-qbtn {
+        font-size: 0.7em !important;
+        padding: 8px 3px !important;
+        gap: 3px !important;
+    }
+}
+
+/* ==== v3.1.3 END ANCHOR ==== */
+html body #ccm_quickbar,
+html body .ccm-quickbar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+html body #ccm_grid,
+html body .ccm-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+@media (min-width: 1200px) {
+    html body #ccm_quickbar,
+    html body .ccm-quickbar { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    html body #ccm_grid,
+    html body .ccm-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+/* ==== ABSOLUTE FINAL v3.1.3: phone never 3-col toolbar/grid ==== */
+html body #ccm_quickbar,
+html body .ccm-quickbar,
+html body #ccm_embed #ccm_quickbar,
+html body #ccm_embed .ccm-quickbar,
+html body .ccm-manager-box #ccm_quickbar,
+html body .ccm-manager-box .ccm-quickbar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+html body #ccm_quickbar .ccm-qbtn,
+html body .ccm-quickbar .ccm-qbtn {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: unset !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+}
+html body #ccm_grid,
+html body .ccm-grid,
+html body #ccm_embed #ccm_grid,
+html body #rm_characters_block #ccm_grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+@media (min-width: 1200px) {
+    html body #ccm_quickbar,
+    html body .ccm-quickbar {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    html body #ccm_grid,
+    html body .ccm-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
 }
