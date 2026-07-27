@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '3.1.3';
+    const VERSION = '3.1.4';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -40,23 +40,60 @@
         }
         const settings = ctx.extensionSettings[MODULE];
 
-        /* ---- mobile layout enforcer v3.1.3 ---- */
-        // 部分酒馆主题 CSS 会覆盖扩展 style.css 的 grid 规则；用 style 标签 + 运行时再钉一次
+        /* ---- mobile layout enforcer v3.1.4 ---- */
+        // 顶部控制区禁止被 flex 压扁；快捷按钮固定触控高度；卡片 2 列可略压矮
         (function enforceMobileLayout() {
             const css = `
+html body #ccm_embed,html body #ccm_embed.ccm-embed-box,html body .ccm-manager-box{
+  display:flex!important;flex-direction:column!important;min-height:0!important}
+html body .ccm-embed-head,html body .ccm-search-wrap,html body #ccm_quickbar,html body .ccm-quickbar,
+html body #ccm_modes,html body .ccm-modes,html body #ccm_folderbar,html body .ccm-folderbar,
+html body #ccm_tagbar,html body .ccm-tagbar,html body .ccm-modal-head,html body #ccm_pager,html body .ccm-pager,
+html body #ccm_batchbar,html body .ccm-batchbar{
+  flex:0 0 auto!important;flex-shrink:0!important;min-height:auto!important;max-height:none!important;
+  height:auto!important;overflow:visible!important;opacity:1!important;visibility:visible!important}
 html body .ccm-quickbar,html body #ccm_quickbar,html body #ccm_embed #ccm_quickbar{
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:8px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
-  overflow-x:hidden!important;overflow-y:visible!important}
+  gap:10px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+  padding:10px 10px 4px!important;overflow:visible!important}
 html body .ccm-qbtn,html body #ccm_quickbar .ccm-qbtn{
   width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
   display:inline-flex!important;justify-content:center!important;align-items:center!important;
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
-  padding:9px 6px!important;font-size:0.76em!important;flex:unset!important}
+  min-height:44px!important;height:auto!important;padding:12px 8px!important;font-size:0.84em!important;
+  line-height:1.25!important;flex:unset!important;border-radius:12px!important}
+html body .ccm-search-wrap{margin:10px 10px 0!important;padding:0!important}
+html body .ccm-search,html body #ccm_search{
+  min-height:44px!important;height:44px!important;font-size:0.95em!important;padding-left:36px!important;padding-right:36px!important}
+html body .ccm-modes,html body #ccm_modes{
+  display:flex!important;flex-wrap:wrap!important;gap:8px!important;padding:10px 10px 0!important}
+html body .ccm-fchip,html body .ccm-tchip,html body .ccm-fdchip{
+  min-height:36px!important;padding:8px 14px!important;font-size:0.86em!important}
+html body .ccm-folderbar,html body #ccm_folderbar{padding:8px 10px 0!important;min-height:40px!important}
 html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body #rm_characters_block #ccm_grid{
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:8px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+  gap:6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+  flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;padding:8px 6px 10px!important}
+html body .ccm-tile{min-height:0!important}
+html body .ccm-tile-name{font-size:0.72em!important;-webkit-line-clamp:2!important;line-clamp:2!important;padding:5px 6px 6px!important}
 html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow-x:hidden!important}
+/* 简介弹窗：居中 + 头固定可点叉 */
+html body .ccm-overlay{
+  position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:max(12px,env(safe-area-inset-top,0px)) 10px max(12px,env(safe-area-inset-bottom,0px))!important;
+  z-index:2147483000!important;box-sizing:border-box!important}
+html body .ccm-detail-box,html body #ccm_detail_modal .ccm-detail-box{
+  display:flex!important;flex-direction:column!important;max-height:min(88dvh,calc(100vh - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)))!important;
+  width:min(100vw - 12px,720px)!important;margin:0 auto!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important}
+html body .ccm-detail-box .ccm-modal-head,html body #ccm_detail_modal .ccm-modal-head{
+  position:sticky!important;top:0!important;z-index:5!important;flex:0 0 auto!important;background:#0f1522!important;
+  min-height:48px!important;padding:12px 14px!important}
+html body .ccm-modal-close,html body .ccm-detail-box .ccm-modal-close{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-width:44px!important;min-height:44px!important;font-size:1.15em!important;opacity:1!important;visibility:visible!important;
+  color:#f3f7ff!important;-webkit-text-fill-color:#f3f7ff!important;pointer-events:auto!important}
+html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm-detail-sec-text,html body .ccm-detail-sec-text *{
+  color:#f3f7ff!important;-webkit-text-fill-color:#f3f7ff!important;opacity:1!important}
 @media (min-width:1200px){
   html body .ccm-grid,html body #ccm_grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   html body .ccm-quickbar,html body #ccm_quickbar{grid-template-columns:repeat(3,minmax(0,1fr))!important}
@@ -71,13 +108,28 @@ html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:10
             const pin = () => {
                 const wide = window.innerWidth >= 1200;
                 const cols = wide ? 'repeat(3, minmax(0, 1fr))' : 'repeat(2, minmax(0, 1fr))';
+                const topSel = [
+                    '.ccm-embed-head', '.ccm-search-wrap', '#ccm_quickbar', '.ccm-quickbar',
+                    '#ccm_modes', '.ccm-modes', '#ccm_folderbar', '.ccm-folderbar',
+                    '#ccm_tagbar', '.ccm-tagbar', '.ccm-modal-head', '#ccm_pager', '.ccm-pager',
+                    '#ccm_batchbar', '.ccm-batchbar'
+                ].join(',');
+                document.querySelectorAll(topSel).forEach((n) => {
+                    n.style.setProperty('flex', '0 0 auto', 'important');
+                    n.style.setProperty('flex-shrink', '0', 'important');
+                    n.style.setProperty('min-height', 'auto', 'important');
+                    n.style.setProperty('max-height', 'none', 'important');
+                    n.style.setProperty('height', 'auto', 'important');
+                    n.style.setProperty('overflow', 'visible', 'important');
+                });
                 document.querySelectorAll('#ccm_quickbar, .ccm-quickbar').forEach((n) => {
                     n.style.setProperty('display', 'grid', 'important');
                     n.style.setProperty('grid-template-columns', cols, 'important');
                     n.style.setProperty('width', '100%', 'important');
                     n.style.setProperty('max-width', '100%', 'important');
-                    n.style.setProperty('overflow-x', 'hidden', 'important');
-                    n.style.setProperty('gap', '8px', 'important');
+                    n.style.setProperty('overflow', 'visible', 'important');
+                    n.style.setProperty('gap', '10px', 'important');
+                    n.style.setProperty('padding', '10px 10px 4px', 'important');
                 });
                 document.querySelectorAll('#ccm_grid, .ccm-grid').forEach((n) => {
                     n.style.setProperty('display', 'grid', 'important');
@@ -85,13 +137,42 @@ html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:10
                     n.style.setProperty('width', '100%', 'important');
                     n.style.setProperty('max-width', '100%', 'important');
                     n.style.setProperty('box-sizing', 'border-box', 'important');
+                    n.style.setProperty('flex', '1 1 auto', 'important');
+                    n.style.setProperty('min-height', '0', 'important');
+                    n.style.setProperty('overflow-y', 'auto', 'important');
+                    n.style.setProperty('gap', '6px', 'important');
                 });
                 document.querySelectorAll('#ccm_quickbar .ccm-qbtn, .ccm-quickbar .ccm-qbtn').forEach((n) => {
                     n.style.setProperty('width', '100%', 'important');
                     n.style.setProperty('min-width', '0', 'important');
                     n.style.setProperty('max-width', '100%', 'important');
+                    n.style.setProperty('min-height', '44px', 'important');
+                    n.style.setProperty('height', 'auto', 'important');
+                    n.style.setProperty('padding', '12px 8px', 'important');
+                    n.style.setProperty('font-size', '0.84em', 'important');
                     n.style.setProperty('flex', 'unset', 'important');
                     n.style.setProperty('box-sizing', 'border-box', 'important');
+                });
+                document.querySelectorAll('#ccm_search, .ccm-search').forEach((n) => {
+                    n.style.setProperty('min-height', '44px', 'important');
+                    n.style.setProperty('height', '44px', 'important');
+                });
+                document.querySelectorAll('.ccm-detail-box .ccm-modal-head, #ccm_detail_modal .ccm-modal-head').forEach((n) => {
+                    n.style.setProperty('position', 'sticky', 'important');
+                    n.style.setProperty('top', '0', 'important');
+                    n.style.setProperty('z-index', '5', 'important');
+                    n.style.setProperty('flex', '0 0 auto', 'important');
+                    n.style.setProperty('min-height', '48px', 'important');
+                    n.style.setProperty('background', '#0f1522', 'important');
+                });
+                document.querySelectorAll('.ccm-modal-close').forEach((n) => {
+                    n.style.setProperty('display', 'inline-flex', 'important');
+                    n.style.setProperty('min-width', '44px', 'important');
+                    n.style.setProperty('min-height', '44px', 'important');
+                    n.style.setProperty('opacity', '1', 'important');
+                    n.style.setProperty('visibility', 'visible', 'important');
+                    n.style.setProperty('color', '#f3f7ff', 'important');
+                    n.style.setProperty('-webkit-text-fill-color', '#f3f7ff', 'important');
                 });
             };
             window.__ccmPinLayout = pin;
@@ -589,6 +670,7 @@ html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:10
                   </div>
                 </div>`);
             const { close } = makeOverlay('ccm_detail_modal', box);
+            if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout(); /* detail pin after open */
 
             const img = box.find('.ccm-detail-avatar');
             img.attr('src', avatarUrl(ch)).on('error', function () {

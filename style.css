@@ -2509,10 +2509,12 @@ html body #ccm_modes,
 html body #ccm_embed .ccm-modes {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 6px !important;
-    padding: 8px 8px 0 !important;
+    gap: 8px !important;
+    padding: 10px 10px 0 !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
 }
 
 html body .ccm-fchip-sort {
@@ -2648,6 +2650,240 @@ html body #rm_characters_block #ccm_grid {
     max-width: 100% !important;
     box-sizing: border-box !important;
 }
+@media (min-width: 1200px) {
+    html body #ccm_quickbar,
+    html body .ccm-quickbar {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    html body #ccm_grid,
+    html body .ccm-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+
+/* ============================================================
+   v3.1.4 MOBILE: TOP CHROME FULL HEIGHT + DETAIL CLOSE SAFE
+   截图：圈出的顶部区被 flex 压成细条，快捷/筛选堆叠看不全
+   策略：顶部全部 flex-shrink:0 + 按钮 min-height 44px；卡片区让位
+   ============================================================ */
+
+html body #ccm_embed,
+html body #ccm_embed.ccm-embed-box,
+html body .ccm-manager-box,
+html body #rm_characters_block.ccm-native-takeover {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+}
+
+/* 顶部控制区：绝对禁止被压扁 */
+html body .ccm-embed-head,
+html body .ccm-search-wrap,
+html body #ccm_quickbar,
+html body .ccm-quickbar,
+html body #ccm_modes,
+html body .ccm-modes,
+html body #ccm_folderbar,
+html body .ccm-folderbar,
+html body #ccm_tagbar,
+html body .ccm-tagbar,
+html body .ccm-modal-head,
+html body #ccm_pager,
+html body .ccm-pager,
+html body #ccm_batchbar,
+html body .ccm-batchbar {
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    min-height: auto !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+}
+
+html body #ccm_quickbar,
+html body .ccm-quickbar,
+html body #ccm_embed #ccm_quickbar,
+html body #ccm_embed .ccm-quickbar,
+html body .ccm-manager-box #ccm_quickbar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(44px, auto) !important;
+    gap: 10px !important;
+    padding: 10px 10px 4px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+html body #ccm_quickbar .ccm-qbtn,
+html body .ccm-quickbar .ccm-qbtn,
+html body #ccm_embed .ccm-qbtn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 44px !important;
+    height: auto !important;
+    padding: 12px 8px !important;
+    font-size: 0.84em !important;
+    line-height: 1.25 !important;
+    box-sizing: border-box !important;
+    flex: unset !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    border-radius: 12px !important;
+}
+
+html body .ccm-search-wrap {
+    margin: 10px 10px 0 !important;
+    padding: 0 0 0 0 !important;
+}
+
+html body #ccm_search,
+html body .ccm-search {
+    min-height: 44px !important;
+    height: 44px !important;
+    line-height: 1.2 !important;
+    font-size: 0.95em !important;
+    box-sizing: border-box !important;
+}
+
+html body #ccm_modes,
+html body .ccm-modes {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 10px 10px 0 !important;
+    max-width: 100% !important;
+}
+
+html body .ccm-fchip,
+html body .ccm-tchip,
+html body .ccm-fdchip {
+    min-height: 36px !important;
+    padding: 8px 14px !important;
+    font-size: 0.86em !important;
+    box-sizing: border-box !important;
+}
+
+html body #ccm_folderbar,
+html body .ccm-folderbar {
+    padding: 8px 10px 0 !important;
+    min-height: 40px !important;
+    box-sizing: border-box !important;
+}
+
+/* 卡片区：把垂直空间让给顶部，可略压矮 */
+html body #ccm_grid,
+html body .ccm-grid,
+html body #ccm_embed #ccm_grid,
+html body #rm_characters_block #ccm_grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    padding: 8px 6px 10px !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+html body .ccm-tile-name {
+    font-size: 0.72em !important;
+    line-height: 1.25 !important;
+    padding: 5px 6px 6px !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+}
+
+/* 简介弹窗：居中 + 头部固定 + 叉够大可点 */
+html body .ccm-overlay,
+html body #ccm_detail_modal.ccm-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: max(12px, env(safe-area-inset-top, 0px)) 10px max(12px, env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+    z-index: 2147483000 !important;
+    overflow: auto !important;
+}
+
+html body .ccm-detail-box,
+html body #ccm_detail_modal .ccm-detail-box {
+    display: flex !important;
+    flex-direction: column !important;
+    width: min(100vw - 12px, 720px) !important;
+    max-width: calc(100vw - 12px) !important;
+    max-height: min(88dvh, calc(100vh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))) !important;
+    margin: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+html body .ccm-detail-box > .ccm-modal-head,
+html body #ccm_detail_modal .ccm-modal-head {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 6 !important;
+    flex: 0 0 auto !important;
+    min-height: 48px !important;
+    padding: 12px 14px !important;
+    background: #0f1522 !important;
+    background-color: #0f1522 !important;
+}
+
+html body .ccm-modal-close,
+html body .ccm-detail-box .ccm-modal-close,
+html body #ccm_detail_modal .ccm-modal-close {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: 1.2em !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #f3f7ff !important;
+    -webkit-text-fill-color: #f3f7ff !important;
+    pointer-events: auto !important;
+}
+
+html body .ccm-detail-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+html body .ccm-detail-sec-title,
+html body .ccm-detail-sec-title *,
+html body .ccm-detail-sec-text,
+html body .ccm-detail-sec-text *,
+html body .ccm-detail-sub,
+html body .ccm-detail-stats {
+    color: #f3f7ff !important;
+    -webkit-text-fill-color: #f3f7ff !important;
+    opacity: 1 !important;
+}
+
 @media (min-width: 1200px) {
     html body #ccm_quickbar,
     html body .ccm-quickbar {
