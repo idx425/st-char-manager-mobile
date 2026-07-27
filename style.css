@@ -1,5 +1,5 @@
 /* ============================================================
-   角色卡管理 · Mobile 强制深色玻璃 v3.1.0
+   角色卡管理 · Mobile 强制深色玻璃 v3.1.2
    设计语言：Dark Glassmorphism · 浅色主题强制可读 · 手机弹层居中
    与 API 快切 (st-api-switcher) 同一套视觉与定位体系
    ============================================================ */
@@ -251,7 +251,7 @@
     display: flex !important;
     flex-direction: column !important;
     flex: 0 1 auto !important;
-    width: min(560px, calc(100vw - 24px)) !important;
+    width: min(640px, calc(100vw - 12px)) !important;
     max-width: calc(100vw - 24px) !important;
     max-height: min(86dvh, calc(100vh - 24px)) !important;
     min-height: 0 !important;
@@ -364,7 +364,7 @@
 /* ---- 管理器主界面 ---- */
 
 .ccm-manager-box {
-    width: min(720px, calc(100vw - 24px)) !important;
+    width: min(100vw - 16px, 920px) !important;
     height: min(86dvh, calc(100vh - 24px)) !important;
     max-height: min(86dvh, calc(100vh - 24px)) !important;
 }
@@ -492,12 +492,11 @@
     flex: 1;
     overflow-y: auto;
     display: grid;
-    /* 固定一排三张：列数再多卡名就放不下了，宽屏让卡变大而不是变多 */
-    grid-template-columns: repeat(3, 1fr);
-    /* auto 行高在 flex+滚动容器里会被压塌（卡片被切成扁条），必须显式撑起 */
+    /* 手机默认 2 列：3 列在窄屏会挤到看不全卡名/按钮 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: max-content;
-    gap: 11px;
-    padding: 13px 14px 16px;
+    gap: 10px;
+    padding: 10px 10px 14px;
     align-content: start;
     scrollbar-width: thin;
     scrollbar-color: rgb(34 211 238 / 25%) transparent;
@@ -512,9 +511,11 @@
     border-radius: 5px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 560px) {
     .ccm-grid {
-        gap: 13px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        padding: 12px 14px 16px;
     }
 }
 
@@ -715,7 +716,7 @@
 /* ---- 详情弹窗 ---- */
 
 .ccm-detail-box {
-    width: min(620px, calc(100vw - 24px)) !important;
+    width: min(720px, calc(100vw - 12px)) !important;
     max-height: min(86dvh, calc(100vh - 24px)) !important;
 }
 
@@ -869,8 +870,11 @@
     font-family: var(--ccm-mono);
     font-size: 0.72em;
     letter-spacing: 0.14em;
-    opacity: 0.75;
+    opacity: 1;
+    color: #e8eef8 !important;
+    -webkit-text-fill-color: #e8eef8 !important;
     border-bottom: 1px solid var(--ccm-line);
+    background: rgb(255 255 255 / 3%);
 }
 
 .ccm-sec-copy {
@@ -924,7 +928,9 @@
     overflow-y: auto;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    opacity: 0.85;
+    opacity: 1;
+    color: #f3f7ff !important;
+    -webkit-text-fill-color: #f3f7ff !important;
     scrollbar-width: thin;
     scrollbar-color: rgb(34 211 238 / 25%) transparent;
 }
@@ -1459,7 +1465,7 @@
 
     .ccm-modal-box {
         width: min(100%, calc(100vw - 20px)) !important;
-        max-width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 12px) !important;
         max-height: min(88dvh, calc(100vh - 20px)) !important;
         margin: 0 auto !important;
         top: auto !important;
@@ -1674,7 +1680,7 @@
 }
 
 
-/* ==== MOBILE FORCE DARK / CENTER v3.1.0 ==== */
+/* ==== MOBILE FORCE DARK / CENTER v3.1.2 ==== */
 
 .ccm-settings .text_pole,
 .ccm-overlay .text_pole,
@@ -1801,7 +1807,7 @@
 }
 
 
-/* ==== FINAL MOBILE v3.1.0 HARD OVERRIDES ==== */
+/* ==== FINAL MOBILE v3.1.2 HARD OVERRIDES ==== */
 
 /* 手机端：遮罩与弹层始终居中，禁止顶到上方 / 被 safe-area 裁切 */
 .ccm-overlay {
@@ -1826,7 +1832,7 @@
     bottom: auto !important;
     margin: 0 auto !important;
     transform: none !important;
-    max-width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 12px) !important;
     max-height: min(88dvh, calc(100vh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))) !important;
     overflow: hidden !important;
     background-color: #0f1522 !important;
@@ -1835,7 +1841,7 @@
 }
 
 .ccm-manager-box {
-    width: min(720px, calc(100vw - 20px)) !important;
+    width: min(calc(100vw - 16px), 920px) !important;
     height: min(88dvh, calc(100vh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))) !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1973,4 +1979,300 @@
     .ccm-manager-box {
         height: min(88dvh, calc(100vh - 20px)) !important;
     }
+}
+
+/* ==== FINAL MOBILE v3.1.2 LAYOUT + TEXT ==== */
+
+/* 遮罩居中 + safe-area */
+.ccm-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: max(6px, env(safe-area-inset-top, 0px)) max(6px, env(safe-area-inset-right, 0px)) max(6px, env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px)) !important;
+    z-index: 2147483000 !important;
+    transform: none !important;
+    background: rgb(2 4 10 / 86%) !important;
+}
+
+/* 主面板尽量吃满手机宽度，避免两侧留白把卡片挤窄 */
+body .ccm-manager-box,
+#ccm_manager_modal .ccm-manager-box,
+.ccm-overlay .ccm-manager-box {
+    width: min(100vw - 10px, 980px) !important;
+    max-width: calc(100vw - 10px) !important;
+    height: min(92dvh, calc(100vh - 10px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))) !important;
+    max-height: min(92dvh, calc(100vh - 10px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))) !important;
+    margin: 0 auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    background-color: #0f1522 !important;
+    color: #f3f7ff !important;
+}
+
+body .ccm-detail-box,
+body .ccm-folder-box,
+body .ccm-modal-box,
+#ccm_detail_modal .ccm-detail-box,
+.ccm-overlay .ccm-detail-box,
+.ccm-overlay .ccm-folder-box,
+.ccm-overlay .ccm-modal-box {
+    width: min(100vw - 10px, 760px) !important;
+    max-width: calc(100vw - 10px) !important;
+    max-height: min(92dvh, calc(100vh - 10px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))) !important;
+    margin: 0 auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    background-color: #0f1522 !important;
+    color: #f3f7ff !important;
+}
+
+/* 嵌入原生角色面板时也吃满宽度 */
+#ccm_embed,
+.ccm-embed-box,
+.ccm-native-takeover,
+#rm_characters_block.ccm-native-takeover,
+#rm_characters_block.ccm-native-takeover #ccm_embed {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 手机强制 2 列：覆盖酒馆主题与旧 3 列规则；嵌入面板同样生效 */
+.ccm-grid,
+#ccm_grid,
+#ccm_grid.ccm-grid,
+#ccm_embed #ccm_grid,
+#ccm_embed .ccm-grid,
+#rm_characters_block .ccm-grid,
+#rm_characters_block #ccm_grid,
+.ccm-manager-box #ccm_grid,
+.ccm-manager-box .ccm-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    padding: 10px 8px 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+@media (min-width: 640px) {
+    .ccm-grid,
+    #ccm_grid,
+    #ccm_grid.ccm-grid,
+    #ccm_embed #ccm_grid,
+    #ccm_embed .ccm-grid,
+    #rm_characters_block .ccm-grid,
+    #rm_characters_block #ccm_grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        padding: 12px 12px 16px !important;
+    }
+}
+
+/* 简介区块标题/正文：浅色主题下强制亮字（修纯黑看不清） */
+body .ccm-detail-sec-title,
+body .ccm-detail-sec-title span,
+body .ccm-detail-sec-title *,
+body .ccm-detail-sec-text,
+body .ccm-detail-sec-text *,
+body .ccm-detail-sub,
+body .ccm-detail-stats,
+body .ccm-detail-name,
+body .ccm-detail-name-text,
+body .ccm-tag,
+body .ccm-dim,
+body .ccm-tile-name,
+body .ccm-folder-name,
+body .ccm-empty,
+body .ccm-count,
+body .ccm-note,
+body .ccm-batch-count,
+#ccm_detail_modal .ccm-detail-sec-title,
+#ccm_detail_modal .ccm-detail-sec-text {
+    color: #f3f7ff !important;
+    -webkit-text-fill-color: #f3f7ff !important;
+    opacity: 1 !important;
+}
+
+body .ccm-detail-sec-title,
+#ccm_detail_modal .ccm-detail-sec-title {
+    background: rgb(255 255 255 / 8%) !important;
+    border-bottom: 1px solid rgb(255 255 255 / 16%) !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 600 !important;
+}
+
+body .ccm-detail-section,
+#ccm_detail_modal .ccm-detail-section {
+    background-color: #121826 !important;
+    border-color: rgb(255 255 255 / 14%) !important;
+}
+
+/* 标题字不用渐变透明：浅色主题 clip 失败会变纯黑 */
+body .ccm-modal-head > span:first-child,
+body .ccm-embed-title,
+body .ccm-settings .ccm-sys-id {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+}
+
+body .ccm-detail-name-text {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+}
+
+/* 仅图标保留渐变 */
+body .ccm-grad-icon,
+body .ccm-modal-head > span:first-child > i.fa-solid,
+body .ccm-embed-title > i.fa-solid {
+    background: linear-gradient(120deg, #22d3ee, #818cf8) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+body .ccm-blink {
+    color: #22d3ee !important;
+    -webkit-text-fill-color: #22d3ee !important;
+}
+
+.ccm-modes,
+.ccm-quickbar,
+.ccm-folderbar,
+.ccm-tagbar,
+.ccm-pager,
+.ccm-batchbar,
+.ccm-embed-head,
+.ccm-search-wrap {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.ccm-tile-name {
+    font-size: 0.82em !important;
+    line-height: 1.35 !important;
+}
+
+@media (max-width: 640px) {
+    body .ccm-manager-box,
+    #ccm_manager_modal .ccm-manager-box {
+        width: calc(100vw - 8px) !important;
+        max-width: calc(100vw - 8px) !important;
+        height: min(93dvh, calc(100vh - 8px)) !important;
+    }
+    body .ccm-detail-box,
+    body .ccm-folder-box,
+    body .ccm-modal-box {
+        width: calc(100vw - 8px) !important;
+        max-width: calc(100vw - 8px) !important;
+    }
+    .ccm-grid,
+    #ccm_grid,
+    #ccm_grid.ccm-grid,
+    #ccm_embed #ccm_grid,
+    #ccm_embed .ccm-grid,
+    #rm_characters_block .ccm-grid,
+    #rm_characters_block #ccm_grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 8px 6px 12px !important;
+    }
+}
+
+/* ==== ULTRA FINAL v3.1.2 PHONE READABILITY ==== */
+
+/* 原生角色面板嵌入：吃满可用宽，去掉把网格挤窄的左右内边距 */
+#rm_characters_block.ccm-native-takeover,
+#rm_characters_block.ccm-native-takeover #ccm_embed,
+#ccm_embed.ccm-embed-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#ccm_embed .ccm-modes,
+#ccm_embed .ccm-quickbar,
+#ccm_embed .ccm-folderbar,
+#ccm_embed .ccm-tagbar,
+#ccm_embed .ccm-pager,
+#ccm_embed .ccm-batchbar,
+#ccm_embed .ccm-search-wrap,
+#ccm_embed .ccm-embed-head {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+/* 窄屏永远 2 列，直到平板宽度 */
+@media (max-width: 700px) {
+    .ccm-grid,
+    #ccm_grid,
+    #ccm_grid.ccm-grid,
+    #ccm_embed #ccm_grid,
+    .ccm-embed-box #ccm_grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 8px 6px 12px !important;
+    }
+    .ccm-manager-box,
+    .ccm-detail-box,
+    .ccm-folder-box,
+    .ccm-modal-box {
+        width: calc(100vw - 8px) !important;
+        max-width: calc(100vw - 8px) !important;
+    }
+    .ccm-tile-name {
+        font-size: 0.78em !important;
+        -webkit-line-clamp: 3 !important;
+        line-clamp: 3 !important;
+    }
+}
+
+/* 简介标题/正文：最高优先级亮色（覆盖酒馆浅色主题的全局 black） */
+.ccm-overlay .ccm-detail-sec-title,
+.ccm-overlay .ccm-detail-sec-title *,
+.ccm-overlay .ccm-detail-sec-text,
+.ccm-overlay .ccm-detail-sec-text *,
+#ccm_embed .ccm-detail-sec-title,
+#ccm_embed .ccm-detail-sec-title *,
+#ccm_embed .ccm-detail-sec-text,
+#ccm_embed .ccm-detail-sec-text *,
+.ccm-detail-box .ccm-detail-sec-title,
+.ccm-detail-box .ccm-detail-sec-title *,
+.ccm-detail-box .ccm-detail-sec-text,
+.ccm-detail-box .ccm-detail-sec-text * {
+    color: #f3f7ff !important;
+    -webkit-text-fill-color: #f3f7ff !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.ccm-overlay .ccm-detail-sec-title,
+#ccm_embed .ccm-detail-sec-title,
+.ccm-detail-box .ccm-detail-sec-title {
+    background: rgb(255 255 255 / 8%) !important;
+    color: #e8f0ff !important;
+    -webkit-text-fill-color: #e8f0ff !important;
 }
