@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '3.1.4';
+    const VERSION = '3.2.0';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -40,42 +40,47 @@
         }
         const settings = ctx.extensionSettings[MODULE];
 
-        /* ---- mobile layout enforcer v3.1.4 ---- */
+        /* ---- mobile layout enforcer v3.2.0 ---- */
         // 顶部控制区禁止被 flex 压扁；快捷按钮固定触控高度；卡片 2 列可略压矮
         (function enforceMobileLayout() {
             const css = `
 html body #ccm_embed,html body #ccm_embed.ccm-embed-box,html body .ccm-manager-box{
   display:flex!important;flex-direction:column!important;min-height:0!important}
 html body .ccm-embed-head,html body .ccm-search-wrap,html body #ccm_quickbar,html body .ccm-quickbar,
-html body #ccm_modes,html body .ccm-modes,html body #ccm_folderbar,html body .ccm-folderbar,
-html body #ccm_tagbar,html body .ccm-tagbar,html body .ccm-modal-head,html body #ccm_pager,html body .ccm-pager,
+html body #ccm_modes,html body .ccm-modes,html body .ccm-modal-head,html body #ccm_pager,html body .ccm-pager,
 html body #ccm_batchbar,html body .ccm-batchbar{
   flex:0 0 auto!important;flex-shrink:0!important;min-height:auto!important;max-height:none!important;
   height:auto!important;overflow:visible!important;opacity:1!important;visibility:visible!important}
+html body #ccm_folderbar,html body .ccm-folderbar,html body #ccm_tagbar,html body .ccm-tagbar,html body .ccm-detail-folderrow{
+  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:flex-start!important;
+  align-items:center!important;overflow-x:auto!important;overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important;touch-action:pan-x!important;width:100%!important;max-width:100%!important;
+  box-sizing:border-box!important;flex:0 0 auto!important;flex-shrink:0!important}
+html body .ccm-tchip,html body .ccm-fdchip{flex:0 0 auto!important;flex-shrink:0!important;white-space:nowrap!important}
 html body .ccm-quickbar,html body #ccm_quickbar,html body #ccm_embed #ccm_quickbar{
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:10px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
-  padding:10px 10px 4px!important;overflow:visible!important}
+  gap:8px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+  padding:8px 8px 4px!important}
 html body .ccm-qbtn,html body #ccm_quickbar .ccm-qbtn{
   width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
   display:inline-flex!important;justify-content:center!important;align-items:center!important;
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
-  min-height:44px!important;height:auto!important;padding:12px 8px!important;font-size:0.84em!important;
-  line-height:1.25!important;flex:unset!important;border-radius:12px!important}
-html body .ccm-search-wrap{margin:10px 10px 0!important;padding:0!important}
+  min-height:40px!important;height:auto!important;padding:8px 6px!important;font-size:0.82em!important;
+  line-height:1.2!important;flex:unset!important;border-radius:10px!important}
+html body .ccm-search-wrap{margin:8px 8px 0!important;padding:0!important}
 html body .ccm-search,html body #ccm_search{
-  min-height:44px!important;height:44px!important;font-size:0.95em!important;padding-left:36px!important;padding-right:36px!important}
+  min-height:40px!important;height:40px!important;font-size:0.92em!important;padding-left:34px!important;padding-right:34px!important}
 html body .ccm-modes,html body #ccm_modes{
-  display:flex!important;flex-wrap:wrap!important;gap:8px!important;padding:10px 10px 0!important}
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 8px 0!important}
 html body .ccm-fchip,html body .ccm-tchip,html body .ccm-fdchip{
-  min-height:36px!important;padding:8px 14px!important;font-size:0.86em!important}
-html body .ccm-folderbar,html body #ccm_folderbar{padding:8px 10px 0!important;min-height:40px!important}
-html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body #rm_characters_block #ccm_grid{
+  min-height:34px!important;padding:6px 12px!important;font-size:0.84em!important}
+html body .ccm-folderbar,html body #ccm_folderbar{padding:6px 8px 0!important;min-height:38px!important}
+html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body #rm_characters_block.ccm-native-takeover #ccm_grid{
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
-  flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;padding:8px 6px 10px!important}
+  flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;padding:6px 6px 10px!important}
 html body .ccm-tile{min-height:0!important}
-html body .ccm-tile-name{font-size:0.72em!important;-webkit-line-clamp:2!important;line-clamp:2!important;padding:5px 6px 6px!important}
+html body .ccm-tile-name{font-size:0.72em!important;-webkit-line-clamp:2!important;line-clamp:2!important;padding:4px 5px 5px!important}
 html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow-x:hidden!important}
 /* 简介弹窗：居中 + 头固定可点叉 */
 html body .ccm-overlay{
@@ -110,8 +115,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 const cols = wide ? 'repeat(3, minmax(0, 1fr))' : 'repeat(2, minmax(0, 1fr))';
                 const topSel = [
                     '.ccm-embed-head', '.ccm-search-wrap', '#ccm_quickbar', '.ccm-quickbar',
-                    '#ccm_modes', '.ccm-modes', '#ccm_folderbar', '.ccm-folderbar',
-                    '#ccm_tagbar', '.ccm-tagbar', '.ccm-modal-head', '#ccm_pager', '.ccm-pager',
+                    '#ccm_modes', '.ccm-modes', '.ccm-modal-head', '#ccm_pager', '.ccm-pager',
                     '#ccm_batchbar', '.ccm-batchbar'
                 ].join(',');
                 document.querySelectorAll(topSel).forEach((n) => {
@@ -120,16 +124,26 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                     n.style.setProperty('min-height', 'auto', 'important');
                     n.style.setProperty('max-height', 'none', 'important');
                     n.style.setProperty('height', 'auto', 'important');
-                    n.style.setProperty('overflow', 'visible', 'important');
+                });
+                document.querySelectorAll('#ccm_folderbar, .ccm-folderbar, #ccm_tagbar, .ccm-tagbar, .ccm-detail-folderrow').forEach((n) => {
+                    n.style.setProperty('display', 'flex', 'important');
+                    n.style.setProperty('flex-direction', 'row', 'important');
+                    n.style.setProperty('flex-wrap', 'nowrap', 'important');
+                    n.style.setProperty('overflow-x', 'auto', 'important');
+                    n.style.setProperty('overflow-y', 'hidden', 'important');
+                    n.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
+                    n.style.setProperty('touch-action', 'pan-x', 'important');
+                    n.style.setProperty('width', '100%', 'important');
+                    n.style.setProperty('max-width', '100%', 'important');
                 });
                 document.querySelectorAll('#ccm_quickbar, .ccm-quickbar').forEach((n) => {
+                    if (settings.quickbarCollapsed) return;
                     n.style.setProperty('display', 'grid', 'important');
                     n.style.setProperty('grid-template-columns', cols, 'important');
                     n.style.setProperty('width', '100%', 'important');
                     n.style.setProperty('max-width', '100%', 'important');
-                    n.style.setProperty('overflow', 'visible', 'important');
-                    n.style.setProperty('gap', '10px', 'important');
-                    n.style.setProperty('padding', '10px 10px 4px', 'important');
+                    n.style.setProperty('gap', '8px', 'important');
+                    n.style.setProperty('padding', '8px 8px 4px', 'important');
                 });
                 document.querySelectorAll('#ccm_grid, .ccm-grid').forEach((n) => {
                     n.style.setProperty('display', 'grid', 'important');
@@ -142,42 +156,9 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                     n.style.setProperty('overflow-y', 'auto', 'important');
                     n.style.setProperty('gap', '6px', 'important');
                 });
-                document.querySelectorAll('#ccm_quickbar .ccm-qbtn, .ccm-quickbar .ccm-qbtn').forEach((n) => {
-                    n.style.setProperty('width', '100%', 'important');
-                    n.style.setProperty('min-width', '0', 'important');
-                    n.style.setProperty('max-width', '100%', 'important');
-                    n.style.setProperty('min-height', '44px', 'important');
-                    n.style.setProperty('height', 'auto', 'important');
-                    n.style.setProperty('padding', '12px 8px', 'important');
-                    n.style.setProperty('font-size', '0.84em', 'important');
-                    n.style.setProperty('flex', 'unset', 'important');
-                    n.style.setProperty('box-sizing', 'border-box', 'important');
-                });
-                document.querySelectorAll('#ccm_search, .ccm-search').forEach((n) => {
-                    n.style.setProperty('min-height', '44px', 'important');
-                    n.style.setProperty('height', '44px', 'important');
-                });
-                document.querySelectorAll('.ccm-detail-box .ccm-modal-head, #ccm_detail_modal .ccm-modal-head').forEach((n) => {
-                    n.style.setProperty('position', 'sticky', 'important');
-                    n.style.setProperty('top', '0', 'important');
-                    n.style.setProperty('z-index', '5', 'important');
-                    n.style.setProperty('flex', '0 0 auto', 'important');
-                    n.style.setProperty('min-height', '48px', 'important');
-                    n.style.setProperty('background', '#0f1522', 'important');
-                });
-                document.querySelectorAll('.ccm-modal-close').forEach((n) => {
-                    n.style.setProperty('display', 'inline-flex', 'important');
-                    n.style.setProperty('min-width', '44px', 'important');
-                    n.style.setProperty('min-height', '44px', 'important');
-                    n.style.setProperty('opacity', '1', 'important');
-                    n.style.setProperty('visibility', 'visible', 'important');
-                    n.style.setProperty('color', '#f3f7ff', 'important');
-                    n.style.setProperty('-webkit-text-fill-color', '#f3f7ff', 'important');
-                });
             };
             window.__ccmPinLayout = pin;
             pin();
-            // 渲染后再次钉死（接管嵌入会重建 DOM）
             const mo = new MutationObserver(() => {
                 clearTimeout(mo._t);
                 mo._t = setTimeout(pin, 50);
@@ -189,6 +170,9 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
         if (!Array.isArray(settings.favs)) settings.favs = [];
         if (!Array.isArray(settings.recent)) settings.recent = [];
         if (!['recent', 'name', 'added'].includes(settings.sort)) settings.sort = 'recent';
+        if (typeof settings.quickbarCollapsed !== 'boolean') settings.quickbarCollapsed = false;
+        if (typeof settings.compact !== 'boolean') settings.compact = false;
+        if (!['dark', 'light'].includes(settings.theme)) settings.theme = 'dark';
         if (!Array.isArray(settings.folders)) settings.folders = [];
         if (!settings.cardFolder || typeof settings.cardFolder !== 'object') settings.cardFolder = {};
         // 每页数量取 12/24/48：手机默认 2 列也能整页排满
@@ -205,7 +189,17 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
         if (!Array.isArray(settings.recent)) settings.recent = [];
         settings.favs = settings.favs.filter((a) => typeof a === 'string' && a);
         settings.recent = settings.recent.filter((a) => typeof a === 'string' && a);
-        const save = () => ctx.saveSettingsDebounced();
+        const save = (immediate = false) => {
+            try {
+                ctx.saveSettingsDebounced();
+                if (immediate) {
+                    if (typeof ctx.saveSettings === 'function') ctx.saveSettings();
+                    else if (typeof window.saveSettingsApp === 'function') window.saveSettingsApp();
+                }
+            } catch (e) {
+                console.warn('[角色卡管理] 保存设置异常', e);
+            }
+        };
         // 默认值迁移只改了内存，立刻落盘，避免刷新后反复迁移
         save();
 
@@ -286,7 +280,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
         function setCardFolder(avatar, folderId) {
             if (folderId) settings.cardFolder[avatar] = folderId;
             else delete settings.cardFolder[avatar];
-            save();
+            save(true);
         }
 
         function createFolder(name) {
@@ -296,12 +290,15 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
             if (settings.folders.some((f) => f.name === name)) { toastr.warning('已存在同名文件夹'); return null; }
             const f = { id: uid(), name };
             settings.folders.push(f);
-            save();
+            save(true);
             return f;
         }
 
         function pruneSettings() {
-            const avatars = new Set(chars().map((ch) => ch.avatar));
+            const list = chars();
+            // 防防御：角色列表未加载（空数组）时决不执行清理，防止误擦除 cardFolder 映射
+            if (!list || !list.length) return false;
+            const avatars = new Set(list.map((ch) => ch.avatar));
             let changed = false;
             const favs = settings.favs.filter((a) => avatars.has(a));
             if (favs.length !== settings.favs.length) { settings.favs = favs; changed = true; }
@@ -1456,6 +1453,14 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
             renderRows();
         }
 
+        function syncContainerStyles(target) {
+            const el = (target && target.length) ? target : $('.ccm-settings, .ccm-overlay, .ccm-modal-box, .ccm-embed-box, #ccm_embed');
+            el.toggleClass('ccm-compact', !!settings.compact);
+            el.toggleClass('ccm-theme-light', settings.theme === 'light');
+            el.toggleClass('ccm-theme-dark', settings.theme !== 'light');
+            el.toggleClass('ccm-quick-collapsed', !!settings.quickbarCollapsed);
+        }
+
         function managerInnerHtml() {
             return `
                   <div class="ccm-search-wrap">
@@ -1496,6 +1501,26 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 $('#ccm_grid').scrollTop(0);
             });
             syncClear();
+            syncContainerStyles(box);
+            box.find('#ccm_compact_btn').toggleClass('ccm-head-on', !!settings.compact).on('click', function() {
+                settings.compact = !settings.compact;
+                save(true);
+                syncContainerStyles();
+                $(this).toggleClass('ccm-head-on', !!settings.compact);
+                toastr.info(settings.compact ? '已开启紧凑模式' : '已恢复标准界面尺寸', '角色卡管理');
+            });
+            box.find('#ccm_theme_btn').on('click', () => {
+                settings.theme = (settings.theme === 'light') ? 'dark' : 'light';
+                save(true);
+                syncContainerStyles();
+                toastr.info(settings.theme === 'light' ? '已切换至浅色主题' : '已切换至暗色玻璃主题', '角色卡管理');
+            });
+            box.find('#ccm_quick_btn').on('click', () => {
+                settings.quickbarCollapsed = !settings.quickbarCollapsed;
+                save(true);
+                syncContainerStyles();
+                renderQuickbar();
+            });
             box.find('#ccm_batch').on('click', toggleBatchMode).toggleClass('ccm-head-on', selectMode);
             box.find('#ccm_refresh').on('click', () => {
                 renderFilters();
@@ -1585,6 +1610,19 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
             const bar = $('#ccm_quickbar');
             if (!bar.length) return;
             bar.empty();
+            bar.toggleClass('ccm-quickbar-collapsed', !!settings.quickbarCollapsed);
+            if (settings.quickbarCollapsed) {
+                $('<button type="button" class="ccm-qbtn ccm-qbtn-unfold"></button>')
+                    .html('<i class="fa-solid fa-chevron-down"></i> 展开快捷工具栏')
+                    .attr('title', '展开导入/新建/随机/备份等快捷按钮')
+                    .on('click', () => {
+                        settings.quickbarCollapsed = false;
+                        save(true);
+                        syncContainerStyles();
+                        renderQuickbar();
+                    }).appendTo(bar);
+                return;
+            }
             const mk = (icon, label, title, fn) => $('<button type="button" class="ccm-qbtn"></button>')
                 .attr('title', title)
                 .append($('<i class="fa-solid ' + icon + '"></i>'), $('<span></span>').text(label))
@@ -1627,6 +1665,14 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 for (const ch of list) { exportCard(ch, true); await sleep(350); }
                 toastr.success('已全部触发下载', '角色卡管理');
             });
+            $('<button type="button" class="ccm-qbtn ccm-qbtn-fold" title="折叠快捷工具栏（省出网格高度）"></button>')
+                .html('<i class="fa-solid fa-chevron-up"></i> 折叠')
+                .on('click', () => {
+                    settings.quickbarCollapsed = true;
+                    save(true);
+                    syncContainerStyles();
+                    renderQuickbar();
+                }).appendTo(bar);
             if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout();
         }
 
@@ -1647,7 +1693,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                     <span><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M <span class="ccm-sys-ver">v${VERSION}</span><i class="ccm-blink">▊</i></span>
                     <span class="ccm-head-tools">
                       <span id="ccm_count" class="ccm-count"></span>
-                      <i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
+                      <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-circle-half-stroke ccm-head-btn" id="ccm_theme_btn" title="切换深/浅色主题"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
                       <i class="fa-solid fa-rotate ccm-head-btn" id="ccm_refresh" title="刷新列表"></i>
                       <i class="fa-solid fa-xmark ccm-modal-close" title="关闭"></i>
                     </span>
@@ -1671,7 +1717,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                     <span class="ccm-embed-title"><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M</span>
                     <span class="ccm-head-tools">
                       <span id="ccm_count" class="ccm-count"></span>
-                      <i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
+                      <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-circle-half-stroke ccm-head-btn" id="ccm_theme_btn" title="切换深/浅色主题"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
                       <i class="fa-solid fa-rotate ccm-head-btn" id="ccm_refresh" title="刷新列表"></i>
                       <i class="fa-solid fa-table-list ccm-head-btn" id="ccm_native_back" title="退出接管，恢复酒馆原生角色列表"></i>
                     </span>
@@ -1692,7 +1738,9 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
 
         function unmountEmbed() {
             $('#ccm_embed').remove();
-            $('#rm_characters_block').removeClass('ccm-native-takeover');
+            const host = $('#rm_characters_block');
+            host.removeClass('ccm-native-takeover');
+            host.removeAttr('style');
         }
 
         function setupNativeTakeover() {
@@ -1805,6 +1853,21 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 <input id="ccm_tapchat" type="checkbox">
                 <span>点击卡片直接开始聊天（关闭后点卡片先看详情，防误触）</span>
               </label>
+              <label class="checkbox_label ccm-takeover-row" for="ccm_compact_setting">
+                <input id="ccm_compact_setting" type="checkbox">
+                <span>紧凑模式（调小字号与卡片间距，一屏显示更多卡片）</span>
+              </label>
+              <label class="checkbox_label ccm-takeover-row" for="ccm_quick_setting">
+                <input id="ccm_quick_setting" type="checkbox">
+                <span>默认折叠顶部快捷工具栏（腾出下方角色卡空间）</span>
+              </label>
+              <div class="ccm-setting-row" style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+                <span>主题风格：</span>
+                <select id="ccm_theme_setting" class="text_pole" style="width:auto;min-width:140px;height:36px;">
+                  <option value="dark">暗色玻璃 (Dark)</option>
+                  <option value="light">浅色明亮 (Light)</option>
+                </select>
+              </div>
               <small class="ccm-note">快捷入口：输入框旁魔棒菜单 → 角色卡管理，或命令 /charman；按名称切换：/charswitch 角色名。文件夹、收藏与最近记录都存于本机酒馆设置中，不修改角色卡文件。</small>
             </div>
           </div>
