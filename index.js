@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '3.2.0';
+    const VERSION = '3.2.1';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -91,14 +91,14 @@ html body .ccm-detail-box,html body #ccm_detail_modal .ccm-detail-box{
   display:flex!important;flex-direction:column!important;max-height:min(88dvh,calc(100vh - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)))!important;
   width:min(100vw - 12px,720px)!important;margin:0 auto!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important}
 html body .ccm-detail-box .ccm-modal-head,html body #ccm_detail_modal .ccm-modal-head{
-  position:sticky!important;top:0!important;z-index:5!important;flex:0 0 auto!important;background:#0f1522!important;
+  position:sticky!important;top:0!important;z-index:5!important;flex:0 0 auto!important;background:var(--ccm-panel, #0f1522)!important;
   min-height:48px!important;padding:12px 14px!important}
 html body .ccm-modal-close,html body .ccm-detail-box .ccm-modal-close{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
   min-width:44px!important;min-height:44px!important;font-size:1.15em!important;opacity:1!important;visibility:visible!important;
-  color:#f3f7ff!important;-webkit-text-fill-color:#f3f7ff!important;pointer-events:auto!important}
+  pointer-events:auto!important}
 html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm-detail-sec-text,html body .ccm-detail-sec-text *{
-  color:#f3f7ff!important;-webkit-text-fill-color:#f3f7ff!important;opacity:1!important}
+  opacity:1!important}
 @media (min-width:1200px){
   html body .ccm-grid,html body #ccm_grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   html body .ccm-quickbar,html body #ccm_quickbar{grid-template-columns:repeat(3,minmax(0,1fr))!important}
@@ -1454,11 +1454,16 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
         }
 
         function syncContainerStyles(target) {
-            const el = (target && target.length) ? target : $('.ccm-settings, .ccm-overlay, .ccm-modal-box, .ccm-embed-box, #ccm_embed');
+            const sel = '.ccm-settings, .ccm-overlay, .ccm-modal-box, .ccm-embed-box, #ccm_embed, .ccm-manager-box, #rm_characters_block, #ccm_detail_modal, #rm_character_management';
+            const el = (target && target.length) ? $(sel).add(target) : $(sel);
             el.toggleClass('ccm-compact', !!settings.compact);
             el.toggleClass('ccm-theme-light', settings.theme === 'light');
             el.toggleClass('ccm-theme-dark', settings.theme !== 'light');
             el.toggleClass('ccm-quick-collapsed', !!settings.quickbarCollapsed);
+            if (settings.takeover) {
+                $('body').toggleClass('ccm-theme-light', settings.theme === 'light');
+                $('body').toggleClass('ccm-theme-dark', settings.theme !== 'light');
+            }
         }
 
         function managerInnerHtml() {
