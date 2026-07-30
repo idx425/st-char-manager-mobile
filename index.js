@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '5.3.0';
+    const VERSION = '5.4.0';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -559,8 +559,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 // 使用宏任务延迟关闭，以抵消部分酒馆版本在触发 DOM 切卡后自动重新展开侧边栏的原生行为
                 setTimeout(closeCharDrawer, 10);
                 setTimeout(closeCharDrawer, 50); // 双重保险，彻底压制原生侧边栏抢占
-                setTimeout(closeCharDrawer, 150); // 三重保险
-                setTimeout(closeCharDrawer, 300); // 终极压制
+                setTimeout(closeCharDrawer, 100); // 终极保险
 
                 toastr.success('已切换到「' + esc(charName(ch)) + '」', '角色卡管理');
                 return true;
@@ -2286,7 +2285,7 @@ function syncContainerStyles(target) {
                     <span><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M <span class="ccm-sys-ver">v${VERSION}</span><i class="ccm-blink">▊</i></span>
                     <span class="ccm-head-tools">
                       <span id="ccm_count" class="ccm-count"></span>
-                      <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-circle-half-stroke ccm-head-btn" id="ccm_theme_btn" title="切换深/浅色主题"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
+                      <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
                       <i class="fa-solid fa-id-card ccm-head-btn" id="ccm_toggle_edit_btn" title="在「角色列表」与「卡片定义(背面)」之间切换"></i>
                       <i class="fa-solid fa-id-card ccm-head-btn" id="ccm_toggle_edit_btn" title="在「角色列表」与「卡片定义(背面)」之间切换"></i>
                       <i class="fa-solid fa-rotate ccm-head-btn" id="ccm_refresh" title="刷新列表"></i>
@@ -2334,7 +2333,7 @@ function syncContainerStyles(target) {
                     <span class="ccm-embed-title"><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M</span>
                     <span class="ccm-head-tools">
                       <span id="ccm_count" class="ccm-count"></span>
-                      <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-circle-half-stroke ccm-head-btn" id="ccm_theme_btn" title="切换深/浅色主题"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
+                      <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
                       <i class="fa-solid fa-id-card ccm-head-btn" id="ccm_toggle_edit_btn" title="在「角色列表」与「卡片定义(背面)」之间切换"></i>
                       <i class="fa-solid fa-rotate ccm-head-btn" id="ccm_refresh" title="刷新列表"></i>
                       <i class="fa-solid fa-table-list ccm-head-btn" id="ccm_native_back" title="退出接管，恢复酒馆原生角色列表"></i>
