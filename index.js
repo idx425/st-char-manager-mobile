@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '5.7.0';
+    const VERSION = '5.8.0';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -40,131 +40,19 @@
         }
         const settings = ctx.extensionSettings[MODULE];
 
-                /* ---- mobile layout enforcer ---- */
-        (function enforceMobileLayout() {
+                /* ---- Mobile Layout CSS Injector (Zero-Jitter, Pure CSS) ---- */
+        (function injectMobileLayout() {
             const css = `
-html body #ccm_embed,html body #ccm_embed.ccm-embed-box,html body .ccm-manager-box{
-  display:flex!important;flex-direction:column!important;min-height:0!important}
-html body .ccm-embed-head,html body .ccm-search-wrap,html body #ccm_quickbar,html body .ccm-quickbar,
-html body #ccm_modes,html body .ccm-modes,html body .ccm-modal-head,html body #ccm_pager,html body .ccm-pager,
-html body #ccm_batchbar,html body .ccm-batchbar{
-  flex:0 0 auto!important;flex-shrink:0!important;min-height:auto!important;max-height:none!important;
-  height:auto!important;overflow:visible!important;opacity:1!important;visibility:visible!important}
-html body #ccm_folderbar,html body .ccm-folderbar,html body #ccm_tagbar,html body .ccm-tagbar,html body .ccm-detail-folderrow{
-  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:flex-start!important;
-  align-items:center!important;overflow-x:auto!important;overflow-y:hidden!important;
-  -webkit-overflow-scrolling:touch!important;touch-action:pan-x!important;width:100%!important;max-width:100%!important;
-  box-sizing:border-box!important;flex:0 0 auto!important;flex-shrink:0!important}
-html body .ccm-tchip,html body .ccm-fdchip{flex:0 0 auto!important;flex-shrink:0!important;white-space:nowrap!important}
-html body .ccm-quickbar,html body #ccm_quickbar,html body #ccm_embed #ccm_quickbar{
-  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
-  padding:6px 8px 4px!important}
-@media (min-width:500px){
-  html body .ccm-quickbar,html body #ccm_quickbar{grid-template-columns:repeat(4,minmax(0,1fr))!important}
-}
-html body .ccm-qbtn-unfold,html body .ccm-qbtn-fold{
-  grid-column:1 / -1!important;width:100%!important;justify-content:center!important}
-html body .ccm-qbtn,html body #ccm_quickbar .ccm-qbtn{
-  width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
-  display:inline-flex!important;justify-content:center!important;align-items:center!important;
-  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
-  min-height:36px!important;height:auto!important;padding:6px 4px!important;font-size:0.81em!important;
-  line-height:1.2!important;flex:unset!important;border-radius:8px!important}
-html body .ccm-search-wrap{margin:8px 8px 0!important;padding:0!important}
-html body .ccm-search,html body #ccm_search{
-  min-height:38px!important;height:38px!important;font-size:0.92em!important;padding-left:34px!important;padding-right:34px!important}
-html body .ccm-back-btn{background:rgba(255,255,255,0.08)!important;color:#cbd5e1!important;border:1px solid rgba(255,255,255,0.15)!important}
-html body .ccm-modes,html body #ccm_modes{
-  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 8px 0!important}
-html body .ccm-fchip,html body .ccm-tchip,html body .ccm-fdchip{
-  min-height:32px!important;padding:4px 10px!important;font-size:0.83em!important}
-html body .ccm-folderbar,html body #ccm_folderbar{padding:6px 8px 0!important;min-height:36px!important}
-html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body #rm_characters_block.ccm-native-takeover #ccm_grid{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
-  flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;padding:6px 6px 10px!important}
-html body .ccm-tile{min-height:0!important}
-html body .ccm-tile-name{font-size:0.72em!important;-webkit-line-clamp:2!important;line-clamp:2!important;padding:4px 5px 5px!important}
-html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow-x:hidden!important}
-html body .ccm-overlay{
-  position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;
-  padding:max(12px,env(safe-area-inset-top,0px)) 10px max(12px,env(safe-area-inset-bottom,0px))!important;
-  z-index:2147483000!important;box-sizing:border-box!important}
-html body .ccm-detail-box,html body #ccm_detail_modal .ccm-detail-box{
-  display:flex!important;flex-direction:column!important;max-height:min(88dvh,calc(100vh - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)))!important;
-  width:min(100vw - 12px,720px)!important;margin:0 auto!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important}
-html body .ccm-detail-box .ccm-modal-head,html body #ccm_detail_modal .ccm-modal-head{
-  position:sticky!important;top:0!important;z-index:5!important;flex:0 0 auto!important;background:var(--ccm-panel, #0f1522)!important;
-  min-height:44px!important;padding:10px 12px!important}
-html body .ccm-modal-close,html body .ccm-detail-box .ccm-modal-close{
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  min-width:40px!important;min-height:40px!important;font-size:1.1em!important;opacity:1!important;visibility:visible!important;
-  pointer-events:auto!important}
-html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm-detail-sec-text,html body .ccm-detail-sec-text *{
-  opacity:1!important}
-@media (min-width:1200px){
-  html body .ccm-grid,html body #ccm_grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-}`;
+html body #right-nav-panel.ccm-takeover-active #CharListButtonAndHotSwaps,
+html body #right-nav-panel.ccm-takeover-active #right-nav-panelheader{display:none!important}
+html body #right-nav-panel.ccm-takeover-active #rm_PinAndTabs{margin-top:2px!important;padding-top:2px!important}
+html body #ccm_embed,html body #ccm_embed.ccm-embed-box,html body .ccm-manager-box{display:flex!important;flex-direction:column!important;min-height:0!important}
+html body .ccm-grid,html body #ccm_grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;padding:6px 8px 10px!important}
+@media (min-width:600px){html body .ccm-grid,html body #ccm_grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+html body .ccm-folderbar,html body .ccm-tagbar{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}`;
             let el = document.getElementById('ccm_mobile_layout_fix');
-            if (!el) {
-                el = document.createElement('style');
-                el.id = 'ccm_mobile_layout_fix';
-                document.head.appendChild(el);
-            }
+            if (!el) { el = document.createElement('style'); el.id = 'ccm_mobile_layout_fix'; document.head.appendChild(el); }
             el.textContent = css;
-            const pin = () => {
-                const qCols = window.innerWidth >= 500 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))';
-                const gridCols = window.innerWidth >= 1200 ? 'repeat(3, minmax(0, 1fr))' : 'repeat(2, minmax(0, 1fr))';
-
-                const topSel = [
-                    '.ccm-embed-head', '.ccm-search-wrap', '#ccm_quickbar', '.ccm-quickbar',
-                    '#ccm_modes', '.ccm-modes', '.ccm-modal-head', '#ccm_pager', '.ccm-pager',
-                    '#ccm_batchbar', '.ccm-batchbar'
-                ].join(',');
-                document.querySelectorAll(topSel).forEach((n) => {
-                    n.style.setProperty('flex', '0 0 auto', 'important');
-                    n.style.setProperty('flex-shrink', '0', 'important');
-                    n.style.setProperty('min-height', 'auto', 'important');
-                    n.style.setProperty('max-height', 'none', 'important');
-                    n.style.setProperty('height', 'auto', 'important');
-                });
-                document.querySelectorAll('#ccm_folderbar, .ccm-folderbar, #ccm_tagbar, .ccm-tagbar, .ccm-detail-folderrow').forEach((n) => {
-                    n.style.setProperty('display', 'flex', 'important');
-                    n.style.setProperty('flex-direction', 'row', 'important');
-                    n.style.setProperty('flex-wrap', 'nowrap', 'important');
-                    n.style.setProperty('overflow-x', 'auto', 'important');
-                    n.style.setProperty('overflow-y', 'hidden', 'important');
-                    n.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
-                    n.style.setProperty('touch-action', 'pan-x', 'important');
-                    n.style.setProperty('width', '100%', 'important');
-                    n.style.setProperty('max-width', '100%', 'important');
-                });
-                document.querySelectorAll('#ccm_quickbar, .ccm-quickbar').forEach((n) => {
-                    if (settings.quickbarCollapsed) return;
-                    n.style.setProperty('display', 'grid', 'important');
-                    n.style.setProperty('grid-template-columns', qCols, 'important');
-                    n.style.setProperty('width', '100%', 'important');
-                    n.style.setProperty('max-width', '100%', 'important');
-                    n.style.setProperty('gap', '6px', 'important');
-                    n.style.setProperty('padding', '6px 8px 4px', 'important');
-                });
-                document.querySelectorAll('#ccm_grid, .ccm-grid').forEach((n) => {
-                    n.style.setProperty('display', 'grid', 'important');
-                    n.style.setProperty('grid-template-columns', gridCols, 'important');
-                    n.style.setProperty('width', '100%', 'important');
-                    n.style.setProperty('max-width', '100%', 'important');
-                    n.style.setProperty('box-sizing', 'border-box', 'important');
-                    n.style.setProperty('flex', '1 1 auto', 'important');
-                    n.style.setProperty('min-height', '0', 'important');
-                    n.style.setProperty('overflow-y', 'auto', 'important');
-                    n.style.setProperty('gap', '6px', 'important');
-                });
-            };
-            window.__ccmPinLayout = pin;
-            pin();
-            
-            window.addEventListener('resize', pin);
         })();
 
         if (!Array.isArray(settings.favs)) settings.favs = [];
@@ -179,7 +67,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
         if (!Array.isArray(settings.suppressedTags)) settings.suppressedTags = [];
         settings.suppressedTags = settings.suppressedTags.map((s) => String(s || '').toLowerCase()).filter(Boolean);
         if (!settings.suppressedCardTags || typeof settings.suppressedCardTags !== 'object') settings.suppressedCardTags = {};
-        // 每页数量取 12/24/48：手机默认 2 列也能整页排满
+        // 每页数量必须是 3 的倍数：网格固定一排三张，除不尽会在页尾留空位
         // （老版本存的 10/20/50 自动迁移到最接近的档位）
         const PAGE_SIZES = [12, 24, 48];
         if (!PAGE_SIZES.includes(settings.pageSize)) {
@@ -557,10 +445,7 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
 
                 // 3. 强行关闭右侧抽屉面板，确保直接露出中间聊天窗口(#chat)
                 closeCharDrawer();
-                // 使用宏任务延迟关闭，以抵消部分酒馆版本在触发 DOM 切卡后自动重新展开侧边栏的原生行为
-                setTimeout(closeCharDrawer, 10);
-                setTimeout(closeCharDrawer, 50); // 双重保险，彻底压制原生侧边栏抢占
-                setTimeout(closeCharDrawer, 100); // 终极保险
+                setTimeout(closeCharDrawer, 40);
 
                 // 4. 终极强行剥夺焦点，防自动弹起键盘遮挡阅读视线
                 const dropKeyboard = () => {
@@ -914,7 +799,6 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                   </div>
                 </div>`);
             const { close } = makeOverlay('ccm_detail_modal', box);
-            if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout(); /* detail pin after open */
 
             const img = box.find('.ccm-detail-avatar');
             img.attr('src', avatarUrl(ch)).on('error', function () {
@@ -2054,6 +1938,9 @@ function syncContainerStyles(target) {
             el.toggleClass('ccm-compact', !!settings.compact);
             el.toggleClass('ccm-theme-light', settings.theme === 'light');
             el.toggleClass('ccm-theme-dark', settings.theme !== 'light');
+            el.toggleClass('ccm-quickbar-collapsed', !!settings.quickbarCollapsed);
+            $('#ccm_quickbar').toggleClass('ccm-quickbar-collapsed', !!settings.quickbarCollapsed);
+
             applyAdaptiveTheme();
             syncSettingsUI();
         }
@@ -2106,11 +1993,6 @@ function syncContainerStyles(target) {
                 $(this).toggleClass('ccm-head-on', !!settings.compact);
                 toastr.info(settings.compact ? '已开启紧凑模式' : '已恢复标准界面尺寸', '角色卡管理');
             });
-            const syncQuickBtn = (btn) => {
-                btn.removeClass('fa-chevron-up fa-chevron-down')
-                   .addClass(settings.quickbarCollapsed ? 'fa-chevron-down' : 'fa-chevron-up')
-                   .toggleClass('ccm-head-on', !!settings.quickbarCollapsed);
-            };
             box.find('#ccm_theme_btn').toggleClass('ccm-head-on', settings.theme === 'light').on('click', () => {
                 settings.theme = (settings.theme === 'light') ? 'dark' : 'light';
                 save(true);
@@ -2118,13 +2000,18 @@ function syncContainerStyles(target) {
                 box.find('#ccm_theme_btn').toggleClass('ccm-head-on', settings.theme === 'light');
                 toastr.info(settings.theme === 'light' ? '已切换至浅色主题' : '已切换至暗色玻璃主题', '角色卡管理');
             });
+            const syncQuickBtn = (btn) => {
+                btn.removeClass('fa-chevron-up fa-chevron-down')
+                   .addClass(settings.quickbarCollapsed ? 'fa-chevron-down' : 'fa-chevron-up')
+                   .toggleClass('ccm-head-on', !!settings.quickbarCollapsed);
+            };
             syncQuickBtn(box.find('#ccm_quick_btn'));
-            box.find('#ccm_quick_btn').on('click', function() {
+            box.find('#ccm_quick_btn').on('click', () => {
                 settings.quickbarCollapsed = !settings.quickbarCollapsed;
                 save(true);
                 syncContainerStyles();
+                syncQuickBtn(box.find('#ccm_quick_btn'));
                 renderQuickbar();
-                syncQuickBtn($(this));
             });
             box.find('#ccm_batch').on('click', toggleBatchMode).toggleClass('ccm-head-on', selectMode);
             box.find('#ccm_refresh').on('click', () => {
@@ -2137,7 +2024,6 @@ function syncContainerStyles(target) {
             renderQuickbar();
             renderFilters();
             renderGrid();
-            if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout();
         }
 
         /* ---------------- 内置导入（自带文件选择器，支持 PNG / JSON / CHARX / BYAF / YAML） ---------------- */
@@ -2279,7 +2165,6 @@ function syncContainerStyles(target) {
                     syncContainerStyles();
                     renderQuickbar();
                 }).appendTo(bar);
-            if (typeof window.__ccmPinLayout === 'function') window.__ccmPinLayout();
         }
 
         function openManager() {
@@ -2302,11 +2187,10 @@ function syncContainerStyles(target) {
             const box = $(`
                 <div class="ccm-modal-box ccm-manager-box">
                   <div class="ccm-modal-head">
-                    <span><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M <span class="ccm-sys-ver">v${VERSION}</span><i class="ccm-blink">▊</i></span>
+                    <span><i class="fa-solid fa-address-book"></i> CHAR·MANAGER <span class="ccm-sys-ver">v${VERSION}</span><i class="ccm-blink">▊</i></span>
                     <span class="ccm-head-tools">
                       <span class="ccm-count ccm-sys-count" class="ccm-count"></span>
                       <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
-                      <i class="fa-solid fa-id-card ccm-head-btn" id="ccm_toggle_edit_btn" title="在「角色列表」与「卡片定义(背面)」之间切换"></i>
                       <i class="fa-solid fa-id-card ccm-head-btn" id="ccm_toggle_edit_btn" title="在「角色列表」与「卡片定义(背面)」之间切换"></i>
                       <i class="fa-solid fa-rotate ccm-head-btn" id="ccm_refresh" title="刷新列表"></i>
                       <i class="fa-solid fa-xmark ccm-modal-close" title="关闭"></i>
@@ -2352,7 +2236,7 @@ function syncContainerStyles(target) {
                 <div id="ccm_embed" class="ccm-embed-box">
                   <div class="ccm-embed-head">
                     <button type="button" class="ccm-back-btn" id="ccm_back_chat" title="返回聊天（收起角色面板）"><i class="fa-solid fa-chevron-left"></i><span>返回</span></button>
-                    <span class="ccm-embed-title"><i class="fa-solid fa-address-book"></i> CHAR·MANAGER·M</span>
+                    <span class="ccm-embed-title"><i class="fa-solid fa-address-book"></i> CHAR·MANAGER</span>
                     <span class="ccm-head-tools">
                       <span class="ccm-count ccm-sys-count" class="ccm-count"></span>
                       <i class="fa-solid fa-compress ccm-head-btn" id="ccm_compact_btn" title="切换紧凑模式（调小字号与间距）"></i><i class="fa-solid fa-chevron-up ccm-head-btn" id="ccm_quick_btn" title="折叠/展开快捷栏"></i><i class="fa-solid fa-square-check ccm-head-btn" id="ccm_batch" title="批量管理（多选移入文件夹/收藏/导出/删除）"></i>
@@ -2541,12 +2425,12 @@ function syncContainerStyles(target) {
         <div class="ccm-settings">
           <div class="inline-drawer">
             <div class="inline-drawer-toggle inline-drawer-header">
-              <b><i class="fa-solid fa-address-book ccm-grad-icon"></i>&nbsp;角色卡管理 · Mobile</b>
+              <b><i class="fa-solid fa-address-book ccm-grad-icon"></i>&nbsp;角色卡管理</b>
               <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
             </div>
             <div class="inline-drawer-content">
               <div class="ccm-sys-bar">
-                <span class="ccm-sys-id">CHAR·MANAGER·M</span>
+                <span class="ccm-sys-id">CHAR·MANAGER</span>
                 <span class="ccm-sys-ver">v${VERSION}</span>
                 <i class="ccm-blink">▊</i>
                 <span class="ccm-sys-spacer"></span>
@@ -2645,6 +2529,6 @@ function syncContainerStyles(target) {
         }
         setInterval(quietRemotePoll, 60 * 1000);
 
-        console.log('[角色卡管理·Mobile] v' + VERSION + ' 已加载');
+        console.log('[角色卡管理] v' + VERSION + ' 已加载');
     });
 })();
