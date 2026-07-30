@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '4.3.0';
+    const VERSION = '4.4.0';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -420,7 +420,9 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 return false;
             }
             try {
-                if (typeof c.selectCharacterById === 'function') {
+                if (typeof c.openCharacterChat === 'function') {
+                    await c.openCharacterChat(ch.avatar);
+                } else if (typeof c.selectCharacterById === 'function') {
                     await c.selectCharacterById(idx);
                 } else {
                     // 旧版本 context 没有导出 selectCharacterById 时，退回模拟点击角色列表
@@ -1989,6 +1991,10 @@ function syncContainerStyles(target) {
         function closeCharDrawer() {
             const panel = $('#right-nav-panel');
             if (!panel.length || !panel.hasClass('openDrawer')) return;
+            // 同步 ST 内部视图状态标记，防止开合逻辑死锁
+            if (panel[0].dataset.menuType === 'characters') {
+                panel[0].dataset.menuType = '';
+            }
             const toggle = $('.drawer-toggle').filter(function () {
                 return $(this).parent().find('#right-nav-panel').length > 0;
             }).first();
