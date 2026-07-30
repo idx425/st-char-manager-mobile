@@ -493,7 +493,7 @@
     overflow-y: auto;
     display: grid;
     /* 手机默认 2 列：3 列在窄屏会挤到看不全卡名/按钮 */
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-rows: max-content;
     gap: 10px;
     padding: 10px 10px 14px;
@@ -1008,7 +1008,7 @@
 
 .ccm-quickbar {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
     padding: 9px 10px 0;
     overflow: visible;
@@ -2073,7 +2073,7 @@ body .ccm-modal-box,
 .ccm-manager-box #ccm_grid,
 .ccm-manager-box .ccm-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 10px !important;
     padding: 10px 8px 14px !important;
     width: 100% !important;
@@ -2208,7 +2208,7 @@ body .ccm-blink {
     #ccm_embed .ccm-grid,
     #rm_characters_block .ccm-grid,
     #rm_characters_block #ccm_grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 8px !important;
         padding: 8px 6px 12px !important;
     }
@@ -2248,7 +2248,7 @@ body .ccm-blink {
     #ccm_grid.ccm-grid,
     #ccm_embed #ccm_grid,
     .ccm-embed-box #ccm_grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 8px !important;
         padding: 8px 6px 12px !important;
     }
@@ -2308,7 +2308,7 @@ html body .ccm-manager-box #ccm_grid,
 html body .ccm-manager-box .ccm-grid,
 html body .ccm-embed-box #ccm_grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 8px !important;
     padding: 8px 6px 12px !important;
     width: 100% !important;
@@ -2322,7 +2322,7 @@ html body #ccm_embed #ccm_quickbar,
 html body #ccm_embed .ccm-quickbar,
 html body .ccm-manager-box .ccm-quickbar {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 8px !important;
     padding: 8px 8px 0 !important;
     overflow: visible !important;
@@ -2428,7 +2428,7 @@ html body .ccm-tile-name {
 @media (max-width: 360px) {
     html body .ccm-quickbar,
     html body #ccm_quickbar {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
     html body .ccm-qbtn {
         font-size: 0.72em !important;
@@ -2452,7 +2452,7 @@ html body .ccm-manager-box .ccm-quickbar,
 html body .ccm-embed-box .ccm-quickbar,
 html body #rm_characters_block #ccm_quickbar {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     grid-auto-flow: row !important;
     gap: 8px !important;
     padding: 8px 8px 0 !important;
@@ -2534,7 +2534,7 @@ html body .ccm-manager-box .ccm-grid,
 html body .ccm-embed-box #ccm_grid,
 html body .ccm-embed-box .ccm-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 8px !important;
     padding: 8px 6px 12px !important;
     width: 100% !important;
@@ -2602,12 +2602,12 @@ html body .ccm-tile-name {
 html body #ccm_quickbar,
 html body .ccm-quickbar {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 }
 html body #ccm_grid,
 html body .ccm-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 }
 @media (min-width: 1200px) {
     html body #ccm_quickbar,
@@ -2624,7 +2624,7 @@ html body #ccm_embed .ccm-quickbar,
 html body .ccm-manager-box #ccm_quickbar,
 html body .ccm-manager-box .ccm-quickbar {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 8px !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -2645,7 +2645,7 @@ html body .ccm-grid,
 html body #ccm_embed #ccm_grid,
 html body #rm_characters_block #ccm_grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -2711,7 +2711,7 @@ html body #ccm_embed #ccm_quickbar,
 html body #ccm_embed .ccm-quickbar,
 html body .ccm-manager-box #ccm_quickbar {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     grid-auto-rows: minmax(44px, auto) !important;
     gap: 10px !important;
     padding: 10px 10px 4px !important;
@@ -2789,7 +2789,7 @@ html body .ccm-grid,
 html body #ccm_embed #ccm_grid,
 html body #rm_characters_block #ccm_grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 6px !important;
     padding: 8px 6px 10px !important;
     flex: 1 1 auto !important;

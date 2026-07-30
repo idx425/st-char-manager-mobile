@@ -9,7 +9,7 @@
 
     const MODULE = 'st_char_manager';
     const EXT_NAME = 'st-char-manager-mobile';
-    const VERSION = '4.5.0';
+    const VERSION = '4.6.0';
     const REPO_PATH = 'idx425/st-char-manager-mobile';
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -40,8 +40,7 @@
         }
         const settings = ctx.extensionSettings[MODULE];
 
-        /* ---- mobile layout enforcer v3.2.0 ---- */
-        // 顶部控制区禁止被 flex 压扁；快捷按钮固定触控高度；卡片 2 列可略压矮
+                /* ---- mobile layout enforcer ---- */
         (function enforceMobileLayout() {
             const css = `
 html body #ccm_embed,html body #ccm_embed.ccm-embed-box,html body .ccm-manager-box{
@@ -58,23 +57,28 @@ html body #ccm_folderbar,html body .ccm-folderbar,html body #ccm_tagbar,html bod
   box-sizing:border-box!important;flex:0 0 auto!important;flex-shrink:0!important}
 html body .ccm-tchip,html body .ccm-fdchip{flex:0 0 auto!important;flex-shrink:0!important;white-space:nowrap!important}
 html body .ccm-quickbar,html body #ccm_quickbar,html body #ccm_embed #ccm_quickbar{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:8px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
-  padding:8px 8px 4px!important}
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+  padding:6px 8px 4px!important}
+@media (min-width:500px){
+  html body .ccm-quickbar,html body #ccm_quickbar{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+html body .ccm-qbtn-unfold,html body .ccm-qbtn-fold{
+  grid-column:1 / -1!important;width:100%!important;justify-content:center!important}
 html body .ccm-qbtn,html body #ccm_quickbar .ccm-qbtn{
   width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
   display:inline-flex!important;justify-content:center!important;align-items:center!important;
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
-  min-height:40px!important;height:auto!important;padding:8px 6px!important;font-size:0.82em!important;
-  line-height:1.2!important;flex:unset!important;border-radius:10px!important}
+  min-height:36px!important;height:auto!important;padding:6px 4px!important;font-size:0.81em!important;
+  line-height:1.2!important;flex:unset!important;border-radius:8px!important}
 html body .ccm-search-wrap{margin:8px 8px 0!important;padding:0!important}
 html body .ccm-search,html body #ccm_search{
-  min-height:40px!important;height:40px!important;font-size:0.92em!important;padding-left:34px!important;padding-right:34px!important}
+  min-height:38px!important;height:38px!important;font-size:0.92em!important;padding-left:34px!important;padding-right:34px!important}
 html body .ccm-modes,html body #ccm_modes{
   display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 8px 0!important}
 html body .ccm-fchip,html body .ccm-tchip,html body .ccm-fdchip{
-  min-height:34px!important;padding:6px 12px!important;font-size:0.84em!important}
-html body .ccm-folderbar,html body #ccm_folderbar{padding:6px 8px 0!important;min-height:38px!important}
+  min-height:32px!important;padding:4px 10px!important;font-size:0.83em!important}
+html body .ccm-folderbar,html body #ccm_folderbar{padding:6px 8px 0!important;min-height:36px!important}
 html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body #rm_characters_block.ccm-native-takeover #ccm_grid{
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
@@ -82,7 +86,6 @@ html body .ccm-grid,html body #ccm_grid,html body #ccm_embed #ccm_grid,html body
 html body .ccm-tile{min-height:0!important}
 html body .ccm-tile-name{font-size:0.72em!important;-webkit-line-clamp:2!important;line-clamp:2!important;padding:4px 5px 5px!important}
 html body #ccm_embed,html body #rm_characters_block.ccm-native-takeover{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow-x:hidden!important}
-/* 简介弹窗：居中 + 头固定可点叉 */
 html body .ccm-overlay{
   position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;
   padding:max(12px,env(safe-area-inset-top,0px)) 10px max(12px,env(safe-area-inset-bottom,0px))!important;
@@ -92,16 +95,15 @@ html body .ccm-detail-box,html body #ccm_detail_modal .ccm-detail-box{
   width:min(100vw - 12px,720px)!important;margin:0 auto!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important}
 html body .ccm-detail-box .ccm-modal-head,html body #ccm_detail_modal .ccm-modal-head{
   position:sticky!important;top:0!important;z-index:5!important;flex:0 0 auto!important;background:var(--ccm-panel, #0f1522)!important;
-  min-height:48px!important;padding:12px 14px!important}
+  min-height:44px!important;padding:10px 12px!important}
 html body .ccm-modal-close,html body .ccm-detail-box .ccm-modal-close{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  min-width:44px!important;min-height:44px!important;font-size:1.15em!important;opacity:1!important;visibility:visible!important;
+  min-width:40px!important;min-height:40px!important;font-size:1.1em!important;opacity:1!important;visibility:visible!important;
   pointer-events:auto!important}
 html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm-detail-sec-text,html body .ccm-detail-sec-text *{
   opacity:1!important}
 @media (min-width:1200px){
   html body .ccm-grid,html body #ccm_grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  html body .ccm-quickbar,html body #ccm_quickbar{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }`;
             let el = document.getElementById('ccm_mobile_layout_fix');
             if (!el) {
@@ -111,8 +113,9 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
             }
             el.textContent = css;
             const pin = () => {
-                const wide = window.innerWidth >= 1200;
-                const cols = wide ? 'repeat(3, minmax(0, 1fr))' : 'repeat(2, minmax(0, 1fr))';
+                const qCols = window.innerWidth >= 500 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))';
+                const gridCols = window.innerWidth >= 1200 ? 'repeat(3, minmax(0, 1fr))' : 'repeat(2, minmax(0, 1fr))';
+
                 const topSel = [
                     '.ccm-embed-head', '.ccm-search-wrap', '#ccm_quickbar', '.ccm-quickbar',
                     '#ccm_modes', '.ccm-modes', '.ccm-modal-head', '#ccm_pager', '.ccm-pager',
@@ -139,15 +142,15 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
                 document.querySelectorAll('#ccm_quickbar, .ccm-quickbar').forEach((n) => {
                     if (settings.quickbarCollapsed) return;
                     n.style.setProperty('display', 'grid', 'important');
-                    n.style.setProperty('grid-template-columns', cols, 'important');
+                    n.style.setProperty('grid-template-columns', qCols, 'important');
                     n.style.setProperty('width', '100%', 'important');
                     n.style.setProperty('max-width', '100%', 'important');
-                    n.style.setProperty('gap', '8px', 'important');
-                    n.style.setProperty('padding', '8px 8px 4px', 'important');
+                    n.style.setProperty('gap', '6px', 'important');
+                    n.style.setProperty('padding', '6px 8px 4px', 'important');
                 });
                 document.querySelectorAll('#ccm_grid, .ccm-grid').forEach((n) => {
                     n.style.setProperty('display', 'grid', 'important');
-                    n.style.setProperty('grid-template-columns', cols, 'important');
+                    n.style.setProperty('grid-template-columns', gridCols, 'important');
                     n.style.setProperty('width', '100%', 'important');
                     n.style.setProperty('max-width', '100%', 'important');
                     n.style.setProperty('box-sizing', 'border-box', 'important');
@@ -160,7 +163,6 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
             window.__ccmPinLayout = pin;
             pin();
             const mo = new MutationObserver((muts) => {
-                // 只在管理器相关节点增删时才重排，避免全局 DOM 抖动触发全量 querySelectorAll（修卡顿）
                 for (const m of muts) {
                     const t = m.target;
                     if (t && t.nodeType === 1 && (t.closest && t.closest('#ccm_embed, .ccm-overlay, #ccm_grid, .ccm-quickbar'))) {
@@ -283,12 +285,31 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
 
         function removeTagFromCard(ch, tagId) {
             const tm = tagMapRef();
-            if (!tm || !ch || !ch.avatar || !Array.isArray(tm[ch.avatar])) return false;
-            const i = tm[ch.avatar].indexOf(tagId);
-            if (i < 0) return false;
-            tm[ch.avatar].splice(i, 1);
-            persistTags();
-            return true;
+            let changed = false;
+            if (tm && ch && ch.avatar && Array.isArray(tm[ch.avatar])) {
+                const i = tm[ch.avatar].indexOf(tagId);
+                if (i >= 0) {
+                    tm[ch.avatar].splice(i, 1);
+                    changed = true;
+                }
+            }
+            const c = getCtx();
+            const tagObj = c && Array.isArray(c.tags) ? c.tags.find((t) => t && t.id === tagId) : null;
+            if (tagObj && tagObj.name) {
+                const tagName = String(tagObj.name).toLowerCase();
+                if (ch.data && Array.isArray(ch.data.tags)) {
+                    const before = ch.data.tags.length;
+                    ch.data.tags = ch.data.tags.filter((t) => String(t || '').toLowerCase() !== tagName);
+                    if (ch.data.tags.length !== before) changed = true;
+                }
+                if (Array.isArray(ch.tags)) {
+                    const before = ch.tags.length;
+                    ch.tags = ch.tags.filter((t) => String(t || '').toLowerCase() !== tagName);
+                    if (ch.tags.length !== before) changed = true;
+                }
+            }
+            if (changed) persistTags();
+            return changed;
         }
 
         function createGlobalTag(name) {
@@ -317,14 +338,29 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
         function deleteGlobalTag(tagId) {
             const c = getCtx();
             if (!c || !Array.isArray(c.tags)) return false;
-            const i = c.tags.findIndex((t) => t && t.id === tagId);
-            if (i < 0) return false;
-            c.tags.splice(i, 1);
+            const idx = c.tags.findIndex((t) => t && t.id === tagId);
+            if (idx < 0) return false;
+            const targetTag = c.tags[idx];
+            const tagName = targetTag ? String(targetTag.name || '').toLowerCase() : '';
+            c.tags.splice(idx, 1);
+
             const tm = tagMapRef();
             if (tm) {
                 Object.keys(tm).forEach((k) => {
                     if (Array.isArray(tm[k])) tm[k] = tm[k].filter((x) => x !== tagId);
                 });
+            }
+            if (tagName) {
+                try {
+                    chars().forEach((ch) => {
+                        if (ch.data && Array.isArray(ch.data.tags)) {
+                            ch.data.tags = ch.data.tags.filter((t) => String(t || '').toLowerCase() !== tagName);
+                        }
+                        if (Array.isArray(ch.tags)) {
+                            ch.tags = ch.tags.filter((t) => String(t || '').toLowerCase() !== tagName);
+                        }
+                    });
+                } catch (e) { console.warn('[角色卡管理] 擦除卡片嵌入标签失败', e); }
             }
             persistTags();
             return true;
@@ -332,9 +368,27 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
 
         function charTags(ch) {
             const c = getCtx();
-            if (!c || !c.tagMap || !Array.isArray(c.tags)) return [];
+            if (!c || !c.tagMap || !Array.isArray(c.tags) || !ch) return [];
+            if (!Array.isArray(c.tagMap[ch.avatar])) c.tagMap[ch.avatar] = [];
+
+            // 自动同步卡片内部嵌入的 tags (ch.data.tags 或 ch.tags)
+            const rawTags = [
+                ...(ch.data && Array.isArray(ch.data.tags) ? ch.data.tags : []),
+                ...(Array.isArray(ch.tags) ? ch.tags : []),
+            ];
+            if (rawTags.length > 0) {
+                rawTags.forEach((rt) => {
+                    const name = String(rt || '').trim();
+                    if (!name) return;
+                    let tagObj = c.tags.find((t) => t && String(t.name).toLowerCase() === name.toLowerCase());
+                    if (!tagObj) tagObj = createGlobalTag(name);
+                    if (tagObj && !c.tagMap[ch.avatar].includes(tagObj.id)) {
+                        c.tagMap[ch.avatar].push(tagObj.id);
+                    }
+                });
+            }
+
             const ids = c.tagMap[ch.avatar];
-            if (!Array.isArray(ids)) return [];
             return ids.map((id) => c.tags.find((t) => t && t.id === id)).filter(Boolean);
         }
 
@@ -1365,22 +1419,76 @@ html body .ccm-detail-sec-title,html body .ccm-detail-sec-title *,html body .ccm
             renderFolders();
 
             const tagBox = $('#ccm_tagbar').empty();
-            const tags = allTags();
-            // 选中的标签在酒馆里被删除后，筛选状态会残留成"看不见的过滤器"，主动清掉
+            const tags = allGlobalTags();
             if (filterTag && !tags.some((t) => t.id === filterTag)) filterTag = null;
-            if (!tags.length) { tagBox.hide(); return; }
             tagBox.show();
-            for (const t of tags) {
-                $('<button type="button" class="ccm-tchip"></button>').text(t.name)
-                    .toggleClass('ccm-tchip-on', filterTag === t.id)
-                    .on('click', () => {
-                        filterTag = (filterTag === t.id) ? null : t.id;
-                        curPage = 1;
+
+            tags.forEach((t) => {
+                const chip = $('<div class="ccm-tchip"></div>').toggleClass('ccm-tchip-on', filterTag === t.id);
+                const label = $('<span class="ccm-tchip-label"></span>').text('# ' + t.name).on('click', (e) => {
+                    e.stopPropagation();
+                    filterTag = (filterTag === t.id) ? null : t.id;
+                    curPage = 1;
+                    renderFilters();
+                    renderGrid();
+                });
+                const delIcon = $('<i class="fa-solid fa-xmark ccm-tchip-del" title="删除该标签（从所有卡中移除）"></i>').on('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm('确定彻底删除标签「' + t.name + '」吗？\n此操作会将该标签从所有角色卡中彻底移除。')) {
+                        deleteGlobalTag(t.id);
+                        if (filterTag === t.id) filterTag = null;
+                        toastr.success('已彻底删除标签「' + esc(t.name) + '」', '角色卡管理');
                         renderFilters();
                         renderGrid();
-                    })
-                    .appendTo(tagBox);
-            }
+                    }
+                });
+                chip.append(label, delIcon).appendTo(tagBox);
+            });
+
+            // 新增标签按钮
+            const addBtn = $('<button type="button" class="ccm-tchip ccm-tchip-add" title="新建/添加标签"><i class="fa-solid fa-plus"></i> 标签</button>');
+            addBtn.on('click', (e) => {
+                e.stopPropagation();
+                let addRow = tagBox.find('.ccm-tagbar-addrow');
+                if (addRow.length) { addRow.remove(); return; }
+                addRow = $(`
+                    <div class="ccm-tagbar-addrow">
+                        <input class="text_pole ccm-tagbar-input" placeholder="输入新标签名" maxlength="30" autocomplete="off">
+                        <button type="button" class="menu_button ccm-btn ccm-btn-primary ccm-tagbar-ok" title="创建"><i class="fa-solid fa-check"></i></button>
+                        <button type="button" class="menu_button ccm-btn ccm-tagbar-cancel" title="取消"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                `);
+                const input = addRow.find('input');
+                const doCreate = () => {
+                    const name = String(input.val() || '').trim();
+                    if (!name) { toastr.warning('请输入标签名称', '角色卡管理'); return; }
+                    const newTag = createGlobalTag(name);
+                    if (!newTag) { toastr.error('创建标签失败', '角色卡管理'); return; }
+                    if (selectMode && selected && selected.size > 0) {
+                        let count = 0;
+                        chars().forEach((ch) => {
+                            if (selected.has(ch.avatar)) {
+                                if (addTagToCard(ch, newTag.id)) count++;
+                            }
+                        });
+                        toastr.success('已创建标签「' + esc(name) + '」并为 ' + count + ' 张卡片贴上', '角色卡管理');
+                    } else {
+                        toastr.success('已创建标签「' + esc(name) + '」', '角色卡管理');
+                    }
+                    renderFilters();
+                    renderGrid();
+                };
+                addRow.find('.ccm-tagbar-ok').on('click', doCreate);
+                addRow.find('.ccm-tagbar-cancel').on('click', () => addRow.remove());
+                input.on('keydown', (ev) => {
+                    ev.stopPropagation();
+                    if (ev.key === 'Enter') doCreate();
+                    if (ev.key === 'Escape') addRow.remove();
+                });
+                tagBox.append(addRow);
+                input.trigger('focus');
+            });
+            tagBox.append(addBtn);
         }
 
         function renderFolders() {
